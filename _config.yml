@@ -41,8 +41,6 @@ navbar:
     title: About
   - slug : blog
     title: Blog
-  - slug : archive
-    title: Archive
 
 exclude:
   - "gulp"
