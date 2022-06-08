@@ -1,13 +1,13 @@
 # Site settings
-title_left    : "Synthetic"
-title_right   : "Tulpas" # default: ""
-description   : "A collection of notes regarding pharmacology, new-tech, open-source projects and personal thoughts."
-keywords      : "Jekyll, theme, minimalist, technology, cyberpunk, pharmacology, open-source"
-url           : https://blog.tulpas.dev/ # site url
+title_left    : "Mohamed Elashri"
+title_right   : "blog" # default: ""
+description   : "A collection of notes about physics, programming and personal thoughts."
+keywords      : "physics, egypt, Cincinnati, CERN, c++, c, python"
+url           : https://blog.melashri.net/ # site url
 baseurl       : "" # apply repo name like "/myproject" if used under gh-pages branch, else (under master branch) just leave empty/blank
 cover         : "" # image uri like logo/cover image for site seo
 
-google_analytics  : UA-XXXXX-XX
+#google_analytics  : UA-XXXXX-XX
 twitter_username  : ""
 comments_enabled  : false # if enabled (set to true), please provide your disqus_username
 disqus_shortname  : ""
@@ -28,7 +28,7 @@ sass:
 
 # Author settings
 author:
-  name     : "Gruber"
+  name     : "melashri"
 
 plugins:
   - jekyll-sitemap

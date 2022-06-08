@@ -5,19 +5,15 @@ permalink: /about/
 ---
 
 <ul>
-    <li><span style="color: #000000;">Entrepreneur&nbsp;and&nbsp;freelancer&nbsp;living&nbsp;in&nbsp;Brazil, who likes
+    <li><span style="color: #000000;">Particle Physicist &nbsp;and&nbsp;Programmer&nbsp;living&nbsp;in&nbsp;US, who likes
             to rants on his personal blogs about significantly different subjects to the point of them appearing of an
             almost random nature.</span></li>
-    <li><span style="color: #000000;">Focused&nbsp;on&nbsp;learning&nbsp;Kubernetes, and Infrastructure at scale coupled
-            with DevOps&nbsp;best&nbsp;practices&nbsp;on&nbsp;enterprise-scale&nbsp;projects</span></li>
-    <li><span style="color: #000000;">Owner of a
-            home-lab&nbsp;running&nbsp;Hassio/Home-Assistant,&nbsp;self-hosting&nbsp;numerous&nbsp;open-source services
-            and&nbsp;overall&nbsp;self-hosting&nbsp;enthusiast</span></li>
-    <li><span style="color: #000000;">Previous professional experience include High Frequency Trading (HFT) algorithmic
-            prop trading, derivatives options trading and Over-The-Counter as a researcher of illiquid
-            markets&nbsp;</span></li>
+    <li><span style="color: #000000;">Focused&nbsp;on&nbsp;Long Lived Particles&nbsp;BSM physics, and programming & DevOps&nbsp;best&nbsp;practices&nbsp;in&nbsp;High energy physics&nbsp;projects</span></li>
+    <li><span style="color: #000000;">I'm into&nbsp;self-hosting&nbsp;and doing that with numerous&nbsp;open-source services
+            and&nbsp;Iam overall&nbsp;self-hosting&nbsp;enthusiast</span></li>
+    <li><span style="color: #000000;">I'm a PhD Candidate at University of Cincinnati - Physics Department&nbsp;</span></li>
 </ul>
 <p>&nbsp;</p>
 <p style="padding-left: 30px;"><strong><span style="color: #000000;">You can reach me at</span> <a
-            href="mailto:contact@tulpas.dev" target="_blank" rel="noopener"><span
-                style="color: #ccffff;">contact@tulpas.dev</span></a></strong></p>
+            href="mailto:muhammadelashri@gmail.com" target="_blank" rel="noopener"><span
+                style="color: #ccffff;">muhammadelashri@gmail.comPLEASENOSPAM</span></a></strong></p>
