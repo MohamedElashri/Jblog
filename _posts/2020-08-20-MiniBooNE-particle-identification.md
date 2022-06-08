@@ -160,7 +160,7 @@ precision :  0.8303224943128596
 recall :  0.684576345984113
 ```
 
-![Logistic regression output](/assets/images/MinniBooNE/2.png)
+![Logistic regression output](/assets/images/posts/MinniBooNE/2.png)
 
 
 
@@ -197,7 +197,7 @@ accuracy :  0.8901463894697995
 precision :  0.8136851724925748
 recall :  0.785856134157105
 ```
-![Logistic regression output](/assets/images/MinniBooNE/3.png)
+![Logistic regression output](/assets/images/posts/MinniBooNE/3.png)
 
 
 ### Decision Trees
@@ -235,7 +235,7 @@ precision :  0.8312323407954793
 recall :  0.8438879082082965
 ```
 
-![Logistic regression output](/assets/images/MinniBooNE/4.png)
+![Logistic regression output](/assets/images/posts/MinniBooNE/4.png)
 
 
 ### Random Forest
@@ -273,6 +273,6 @@ recall :  0.8549205648720212
 
 ```
 
-![Logistic regression output](/assets/images/MinniBooNE/5.png)
+![Logistic regression output](/assets/images/posts/MinniBooNE/5.png)
 ## Conclusion
 In our Analysis we find "Random forest" is the best algorithm with the highest ROC value
