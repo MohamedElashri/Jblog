@@ -1,6 +1,6 @@
 # Site settings
-title_left    : "Mohamed Elashri"
-title_right   : "blog" # default: ""
+title_left    : "My Blog"
+title_right   : "" # default: ""
 description   : "A collection of notes about physics, programming and personal thoughts."
 keywords      : "physics, egypt, Cincinnati, CERN, c++, c, python"
 url           : https://mohamedelashri.github.io/blog/ # site url
