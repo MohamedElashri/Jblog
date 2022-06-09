@@ -1,13 +1,37 @@
-/**
- * Syntax highlighting styles
- */
-.highlight {
-    background: #fff;
-    @extend %vertical-rhythm;
 
-    .highlighter-rouge & {
-      background: #eef;
+/**
+* Syntax highlighting styles
+*/
+.highlight {
+  background: #fff; 
+
+  .highlighter-rouge &, &, .hll, pre, code {
+    background: #eef !important;
+  }
+
+  pre {
+    margin: 0;
+    padding: $base-spacing;
+    white-space: pre;
+    line-height: 23px;
+    overflow-x: auto;
+    margin-bottom: 0;
+    word-break: inherit;
+    word-wrap: inherit;
+
+    &, code {
+      color: $base-font-color;
     }
+
+    code {
+      white-space: pre;
+      padding: 0 !important;
+
+      * {
+        white-space: nowrap; // this sets all children inside to nowrap
+      }
+    }
+  } 
 
     .c     { color: #998; font-style: italic } // Comment
     .err   { color: #a61717; background-color: #e3d2d2 } // Error
