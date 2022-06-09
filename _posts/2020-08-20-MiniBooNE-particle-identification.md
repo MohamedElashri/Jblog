@@ -8,13 +8,13 @@ keywords: "MiniBooNE, Particle, physics, particle-identification, Fermilab, ML, 
 In this blog post, I'm going to walk through about applying machine learning algorithms in particle physics. There are many available datasets ready for ML but one of a particular interest is the MiniBooNE dataset available on [UCI machine learning repository](https://archive.ics.uci.edu/ml/datasets/MiniBooNE+particle+identification). This dataset is used for a published [paper](https://inspirehep.net/literature/657972) from the experiment collaboration which is very interesting to read although it is somehow old. Particle Identification was part of the early success stories for machine learning and deep learning so it was applied since early 2000's. 
 
 ## Data
--The dataset has been taken from UCI machine learning repository
--It has been taken from the MiniBooNE experiment conducted in the fermilab.
--A stream of muon neutrinos are fired and the detector measures the precense of electron neutrinos(signal) among the muon neutrinos(noise).
--There are 50 features in the dataset related to every detection made , however no information is given about the features.
--There are no missing values.
--The first line in the file MiniBooNE_PID.txt contains 2 space seperated values , the signal events come first, followed by the background events
--This is a binary classification problem where we want to tell wether a given signal is a electron neutrino or not.
+- The dataset has been taken from UCI machine learning repository
+- It has been taken from the MiniBooNE experiment conducted in the fermilab.
+- A stream of muon neutrinos are fired and the detector measures the precense of electron neutrinos(signal) among the muon neutrinos(noise).
+- There are 50 features in the dataset related to every detection made , however no information is given about the features.
+- There are no missing values.
+- The first line in the file MiniBooNE_PID.txt contains 2 space seperated values , the signal events come first, followed by the background events
+- This is a binary classification problem where we want to tell wether a given signal is a electron neutrino or not.
 
 we can download the dataset directly in our python/jupyter workspace using:
 
@@ -24,7 +24,7 @@ wget -O data.txt -nc --no-check-certificate  https://archive.ics.uci.edu/ml/mach
 
 we will need to do some data processing to make the data ready for more steps. we are going to do the following:
 
--The data is stored in `data.txt` which was downloaded from the above link.
+- The data is stored in `data.txt` which was downloaded from the above link.
 - We use the pandas library to read the data and skip the first row as it contains the number of positive and negative labels
 - Create a numpy array of 1's(electron neutrino) and 0's(muon neutrino) which acts as our labels for the classification problem.
 - Convert the input dataframe into a numpy array for the analysis.
