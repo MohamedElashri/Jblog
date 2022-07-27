@@ -2,14 +2,6 @@
 published: true
 ---
 
----
-layout: post
-title: "Falsifiability"
-description: "This is an essay I wrote during my undergraduate for my philosophy of science course. I discussed why I think falsifiability it not a well positioned concept in physics"
-keywords: "falsifiability, science, philosophy of science"
----
-
-
 
 
 ## Abstact
