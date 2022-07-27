@@ -1,6 +1,17 @@
 ---
-published: false
+published: true
 ---
+
+---
+layout: post
+title: "Falsifiability"
+description: "This is an essay I wrote during my undergraduate for my philosophy of science course. I discussed why I think falsifiability it not a well positioned concept in physics"
+keywords: "falsifiability, science, philosophy of science"
+---
+
+
+
+
 ## Abstact
 The concept of falsifiability of a scientific theory is discussed. First I define what is meant by falsifiability and then discuss the main criticisms of falsifiability and how the science developments react with the sharp edge of the restriction condition of what is defined as science. The last discussion is focusing on the limits that modern development in physics put on falsifiability.
 
