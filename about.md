@@ -2,6 +2,7 @@
 layout: page
 title: About me
 permalink: /about/
+published: true
 ---
 
 <ul>
@@ -14,6 +15,6 @@ permalink: /about/
     <li><span style="color: #000000;">I'm a PhD Candidate at University of Cincinnati - Physics Department&nbsp;</span></li>
 </ul>
 <p>&nbsp;</p>
-<p style="padding-left: 30px;"><strong><span style="color: #000000;">You can reach me at</span> <a
+<p style="padding-left: 30px;"><strong><span style="color: #4C4C4C;">You can reach me at</span> <a
             href="mailto:muhammadelashri@gmail.com" target="_blank" rel="noopener"><span
-                style="color: #ccffff;">muhammadelashri@gmail.comPLEASENOSPAM</span></a></strong></p>
+                style="color: #ccffff;">muhammadelashri@gmail.com_PLEASENOSPAM</span></a></strong></p>
