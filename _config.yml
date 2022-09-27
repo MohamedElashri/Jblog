@@ -3,7 +3,7 @@ title_left    : "My Blog"
 title_right   : "" # default: ""
 description   : "A collection of notes about physics, programming and personal thoughts."
 keywords      : "physics, egypt, Cincinnati, CERN, c++, c, python"
-url           : https://blog.elashri.xyz # site url
+url           : https://blog.melashri.net # site url
 baseurl       : "" # apply repo name like "/myproject" if used under gh-pages branch, else (under master branch) just leave empty/blank
 cover         : "" # image uri like logo/cover image for site seo
 
