@@ -24,10 +24,12 @@ For all SUSY particles and most of non standard model particles you will [find](
 
 For example for stau and its anti particles
 
+
 ``` bash
  ~tau_1-               879     1000015  -1.0    500.00000000      0.000000e+00                   unknown     1000015      0.00000000
  ~tau_1+               880    -1000015   1.0    500.00000000      0.000000e+00                   unknown    -1000015      0.00000000 
  ```
+ 
  
 I wanted a way to specify the Mass and lifetime of generated staus because I wanted to generate different samples for my study. One way to do that was to play with width and mass values inside the `SLHA` file that I generated from `IsaJet` which I found some people at CMS do. I didn't like this solution as there are some unintended consequences for that. Forunetnley there is a method called `ParticlePropertySvc` the I found mention about in one of the rare occasion where I find a [Twiki page](https://twiki.cern.ch/twiki/bin/view/LHCb/FAQ/LHCbFAQ#How_do_I_modify_the_entries_of_t) useful. 
 
@@ -35,29 +37,39 @@ So I wanted to generate staus with long life time enough to be in order of meter
 
 The code to use it is pretty simple. I have to change the mass and lifetime (be careful with units). I give Gravitino very high lifetime because I want it to be considered stable. 
 
+
 ``` python
 from Configurables import LHCb__ParticlePropertySvc
 LHCb__ParticlePropertySvc().Particles += [
-      "~tau_1- 887  1000015  -1.0 %e %e unknown  1000015 0.00000000" % (100, 3.34e-8),
+      "~tau_1- 879  1000015  -1.0 %e %e unknown  1000015 0.00000000" % (100, 3.34e-8),
+      "~tau_1+ 880  -1000015  1.0 %e %e unknown  -1000015 0.00000000" % (100, 3.34e-8),
       "~Gravitino 892  1000039  0.0 %e %e unknown  1000039 0.00000000" % (0, 1e08)
     ]
 ```    
 
+
 Now when you run gauss you should get updates from ParticlePropertySvc in the logs. You will see something like 
+
+
 
 ```
 LHCb::ParticlePropert...SUCCESS  New/updated particles (from "Particles" property)
 ```
 
+
 Also it is useful to print the updated information. You should get something like that
 
+
 ``` bash
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------
  | #    |        Name       |     PdgID    |   Q  |        Mass       |    (c*)Tau/Gamma  |  MaxWidth  |        EvtGen        |  PythiaID  |     Antiparticle     |
  ------------------------------------------------------------------------------------------------------------------------------------------------------------------
  | 792  | ~tau_1-           |      1000015 |  -1  |           100 GeV |     10.013068 m   |      0     |        unknown       |   1000015  |        ~tau_1+       |
+ | 791  | ~tau_1+           |     -1000015 |   1  |           100 GeV |     10.013068 m   |      0     |        unknown       |  -1000015  |        ~tau_1-       |
  | 804  | ~Gravitino        |      1000039 |   0  |             0 eV  |        stable     |      0     |        unknown       |   1000039  |        self-cc       |
  ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+LHCb::ParticlePropert...   INFO  Mass     has beed redefined for [ '~Gravitino' , '~tau_1+' , '~tau_1-' ]
+LHCb::ParticlePropert...   INFO  Lifetime has beed redefined for [ '~Gravitino' , '~tau_1+' , '~tau_1-' ]
  ```
  
- I think we will also need to do the same with the anti-particle `~tau_1+`.
