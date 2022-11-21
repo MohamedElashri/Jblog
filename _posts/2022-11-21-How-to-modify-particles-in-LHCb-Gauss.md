@@ -1,7 +1,5 @@
 ---
 published: true
----
----
 layout: post
 title: "How to modify particles in LHCb Gauss"
 description: "Modifying the properties of particles in ParticleTable.txt"
