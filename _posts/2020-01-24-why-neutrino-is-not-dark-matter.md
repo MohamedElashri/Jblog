@@ -4,6 +4,7 @@ title: "Why neutrinos are not dark matter?"
 description: "neutrinos are not the dark matter candidates for many reason, in this article I'm presenting a cosmological argument supporting this claim.
 ."
 keywords: "neutrino, physics, particle physics"
+comments: true
 ---
 
 -----------------------

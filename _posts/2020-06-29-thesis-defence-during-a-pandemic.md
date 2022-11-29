@@ -3,6 +3,7 @@ layout: post
 title: "Thesis defense during a pandemic"
 description: "The story of how I felt defending my thesis in the middle of a pandemic, all while I was living alone."
 keywords: "Masters, thesis, defence, story"
+comments: true
 ---
 -----------------------
 
