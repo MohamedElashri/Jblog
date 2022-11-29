@@ -2,16 +2,42 @@
 /**
 * Syntax highlighting styles
 */
+
+$base03:            #002b36; // darkest grey
+$base02:            #073642; // dark grey
+$med-grey-dark:     #586e75; // med grey dark
+$base00:            #657b83; // med grey
+$base0:             #839496; // med grey light
+$base1:             #93a1a1; // med grey lighter
+$bg-error-shade:    #e3d2d2; // bg shading for errors
+$bg-dark:           #ede7d5; // darker bg
+$bg-shaded:         #eee8d5; // BG shaded
+// $background:        #fdf6e3; // BG
+$background:        #fcf6e5; // BG
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$teal:      #2aa198;
+$green:     #859900;   // Was going to call this olive
+
 .highlight {
   background: #fff; 
+  @extend %vertical-rhythm;
 
   .highlighter-rouge &, &, .hll, pre, code {
-    background: #eef !important;
+    background: $background !important;
   }
 
   pre {
     margin: 0;
-    padding: $base-spacing;
+    padding: 1px 5px;
+    font-size: 15px;
+    border-radius: 3px;
+    border: 1px solid $grey-color-light;
+    background-color: $background;
     white-space: pre;
     line-height: 23px;
     overflow-x: auto;
@@ -33,7 +59,7 @@
     }
   } 
 
-    .c     { color: #998; font-style: italic } // Comment
+    .c     { color: $base0; font-style: italic } // Comment
     .err   { color: #a61717; background-color: #e3d2d2 } // Error
     .k     { font-weight: bold } // Keyword
     .o     { font-weight: bold } // Operator
