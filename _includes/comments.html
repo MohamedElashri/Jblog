@@ -1,26 +1,19 @@
 {% if site.comments_enabled and page.comments %}
-  <aside id="comments" class="disqus">
+  <aside id="comments" class="isso">
 
     <div class="container">
       <h3><i class="icon icon-comments-o"></i> Comments</h3>
-      <div id="disqus_thread"></div>
+      <div id="isso_thread"></div>
 
-      <script type="text/javascript">
-        var disqus_shortname = '{{ site.disqus_shortname }}';
-        var disqus_identifier = '{{ page.id }}';
-        var disqus_title = '{{ page.title }}';
-        var disqus_url = '{{ page.url | prepend: site.baseurl | prepend: site.url }}';
-        /*var disqus_developer = 1;*/
-
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
+      <script data-isso="https://comments.melashri.eu.org/"
+                data-isso-avatar="true"
+                data-isso-vote="true"               
+                data-isso-vote-levels="-5,5"
+                src="https://comments.melashri.eu.org/js/embed.min.js"></script><
+        <section id="isso-thread"></section>
 
       <noscript>
-        Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        Please enable JavaScript to view the <a href="https://blog.melashri.net" rel="nofollow">comments powered by ISSO.</a>
       </noscript>
     </div>
 
