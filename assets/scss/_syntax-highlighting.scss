@@ -44,18 +44,7 @@ $green:     #859900;   // Was going to call this olive
       background: $background;
     }
 }
-// override the _base.scss
-pre,
-code {
-    font-size: 15px;
-    border: 1px solid $grey-color-light;
-    border-radius: 3px;
-    background-color: $background;
-}
 
-code {
-    padding: 1px 5px;
-}
 
 
 //.highlight { background-color: #fdf6e3; color: $med-grey-dark; max-width: 56.25rem; padding: 1rem; border-radius: 1rem; margin: 0px auto 2em; }
