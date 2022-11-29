@@ -33,12 +33,6 @@ plugins:
   - bourbon
   - jekyll-paginate
   - jektex
-    silent: false
-    cache_dir: ".jektex-cache"
-    ignore: ["*.xml", "README.md", "_drafts/*", "*.yml" ]
-    macros:   
-      - ["\\Q", "\\mathbb{Q}"]
-      - ["\\C", "\\mathbb{C}"]
   
 
 # navbar pages
