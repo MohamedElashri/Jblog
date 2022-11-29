@@ -267,9 +267,9 @@ plt.show() # function to show the plots
 
 These are plots of the physical quantities for different MC steps.
 
-![Simulation results for 50*50 lattice with 500000 steps, https://stanford.edu/~jeffjar/statmech/intro4.html](/assets/images/posts/ising/plot_1.png){: .center-image }
+![Simulation results for 50*50 lattice with 500000 steps](/assets/images/posts/ising/plot_1.png){: .center-image }
 
-![Simulation results for 50*50 lattice with 250000 steps, https://stanford.edu/~jeffjar/statmech/intro4.html](/assets/images/posts/ising/plot_2.png){: .center-image }
+![Simulation results for 50*50 lattice with 250000 steps](/assets/images/posts/ising/plot_2.png){: .center-image }
 
 
 ## Reproduction
