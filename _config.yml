@@ -33,6 +33,7 @@ plugins:
   - jekyll-sitemap
   - bourbon
   - jekyll-paginate
+  - jektex
 
 # navbar pages
 navbar:
@@ -60,3 +61,5 @@ exclude:
   - "script"
   - "vendor"
   - "thinkspace.gemspec"
+  - "renovate.json"
+ 
