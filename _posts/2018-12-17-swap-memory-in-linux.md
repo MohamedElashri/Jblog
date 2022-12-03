@@ -2,7 +2,6 @@
 layout: post
 title: "Swap Memory in Linux"
 description: "How to create and use swap memory in Linux"
-."
 keywords: "linux, swap, memory, ubuntu, debian"
 comments: true
 ---

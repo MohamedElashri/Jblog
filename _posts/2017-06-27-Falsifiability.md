@@ -2,7 +2,7 @@
 published: true
 title: "Falsifiability Principle"
 description: "The Falsifiability Principle is a principle of science that states that a scientific theory must be falsifiable, meaning that it must be possible to conceive of an observation or experiment that could prove the theory false."
-date: 2021-06-27
+date: 2017-06-27
 categories: [philosophy]
 keywords: "philosophy, science, falsifiability"
 comments: true
