@@ -1,8 +1,7 @@
 ---
 layout: post
 title: "Addressing LHC challenges using machine learning"
-description: "My experience with Addressing LHC challenges using machine learning coursera course .
-."
+description: "My experience with Addressing LHC challenges using machine learning coursera course."
 keywords: "machine learning, physics, LHC, coursera"
 comments: true
 ---
