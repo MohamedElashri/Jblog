@@ -9,6 +9,11 @@
   .highlighter-rouge &, &, .hll, pre, code {
     background-color: lighten($light-gray-color, 15%) !important;
     overflow: visible; // Prevents horizontal scrollbars
+    // adjust code box to code length
+    max-width: 100%;    
+    width: auto;
+    overflow-y: auto;
+    overflow-x: auto;
 
   }
 
