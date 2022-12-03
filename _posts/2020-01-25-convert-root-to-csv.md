@@ -10,7 +10,7 @@ keywords: "ROOT, data, LHC, CERN, csv"
 -----------------------
 
 
-Recently I'm working with a lot of `.root`files which is the standard format used in high energy physics for data storage and analysis. It is still hard to use specialized machine learning tools to read and analyze this data. So I searched for a solution and came into this amazing package [rootpy](https://www.rootpy.org/). 
+Recently I'm working with a lot of `.root` files which is the standard format used in high energy physics for data storage and analysis. It is still hard to use specialized machine learning tools to read and analyze this data. So I searched for a solution and came into this amazing package [rootpy](https://www.rootpy.org/). 
 
 The rootpy package is a Python interface to the ROOT data analysis tool. It provides a convenient way to work with ROOT files and trees in Python.
 
@@ -23,9 +23,11 @@ import rootpy
 import numpy as np
 
 # Load the data from the ROOT file into a NumPy array
+
 data = rootpy.root2array("path/to/file.root", "tree_name")
 
 # Save the array to a CSV file
+
 np.savetxt("output.csv", data, delimiter=",")
 ```
 
