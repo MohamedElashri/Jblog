@@ -7,6 +7,8 @@ comments: true
 keywords: "LHCb, Gauss, LHC, CERN, particles, SUSY, SuperSymmetry"
 ---
 
+-----------------------
+
 I am currently working on a new analysis at LHCb. I'm trying to invistigate the possibility of long lived stau decaying to a gravitino and a tau. This is a scenario predicted by Gauge Mediated Supersymmetry Breaking (GMSB) SuperSymmetric (SUSY) model. The  very light gravitino in this model will be the lightest particle with stau being next leading particle (NLP). There is little interest shown in the past into probing phase space so this leaves a gap in exploration. LHCb detector provides a unique opportunity because of its long tracker. This would allow us to probe higher lifetimes with potential high sensitivity. As this a very new signal and SUSY is not something established into LHCb software yet, I found myself dealing with a lot of things but also I enjou learning. I will try to write about some of these things as a way of documenting things here.
 
 Gauss, the software package used for simulation inside LHCb provides information about particles through simple txt file stored in DDDB package under `param/ParticleTable.txt`. Gauss scrape the following information from the file. 
