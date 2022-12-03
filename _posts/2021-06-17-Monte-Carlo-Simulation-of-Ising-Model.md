@@ -128,6 +128,7 @@ Temperature = np.arange(1.6,3.25,0.01) # Initlaize temperature range, takes form
 Energy of the lattice calculations. 
 The energy here is simply the sum of interactions between spins divided by the total number of spins
 '''
+
 @jit(nopython=True, cache=True) # wonderful jit optimization compiler in its high performance mode
 def calcE(s):
     E = 0
