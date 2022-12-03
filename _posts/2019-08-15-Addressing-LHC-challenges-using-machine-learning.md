@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Addressing LHC challenges using machine learning"
+description: "My experience with Addressing LHC challenges using machine learning coursera course .
+."
+keywords: "machine learning, physics, LHC, coursera"
+comments: true
+---
+
+-----------------------
+
+
+A few months ago, have completed one of the most challenging courses I’ve ever taken in my three years’ journey with MOOCs. It was the final course through the beautiful Advanced Machine Learning specialization offered by the National Research University Higher School of Economics, which provides an excellent online classed, which puts you on the same academic level classes. I have gone through most of these seven courses specialization and about finishing the last two, but now I want to talk a little bit about this particular one.
+
+I started this course with a suitable particle physics background in mind, I graduated from a High energy physics program, and I did a thesis on upgrading the CMS experiment detector which is one of the most extensive LHC experiments. This work gives me insight into what is the physics behind the problems we are trying to tackle with ML. Nerveless you don’t need to have this knowledge, but you can get some information from introduction videos, which I think is enough if you are outside the field to go through the course. I have a good experience doing Machine learning, but even with this, I had a lot of problems with completing this course. Some of these problems are because I was one among very few who took this new course at this time, and there were many bugs in assignments, unclear requirements. The most annoying thing is the comparability of some libraries that get upgraded without course instructors update the notebooks regularly, but this is now fixed and no longer a problem.
+
+The course gives us some insight into how we can use ML models to do physics analysis on real data and produces answers which we can demonstrate this by looking to the first-week assignment that you can find my work [here](https://github.com/MohamedElashri/Hadron-Collider-ML/blob/master/Z_Boson_mass_measurement.ipynb) (although you should try to tackle it yourself first). Then the course uses the most potent application of ML, Classification to particle identification, one of the most crucial tasks in particle physics. Since we have a bunch of particles going through each part of our detector, we want to be able to know which went where and how we can reconstruct their tracks, measure their momentum and energy. Etc. Fortunately, this task is suitable for ML to train a classifier that would give us answers to this question, where our features would be our physical and experimental parameters (See how enjoyable this work [here](https://github.com/MohamedElashri/Hadron-Collider-ML/blob/master/Particle_identification.ipynb)).
+
+Week 3 of the course introduces the idea of using Monte-Carlo simulation and why it is essential in particle physics and doing the same ML stuff and compare the real vs. the MC predictions to search for new physics signature ([here](https://github.com/MohamedElashri/Hadron-Collider-ML/blob/master/Search_for_rare_decay.ipynb) you can have a look). I want to say that week three, maybe the hardest, but I liked it the most. The fourth week was the application of what you have learned so far to search for dark matter signature using simulation from new proposed experiment should start collecting data in 2025 (hopefully), you can get a look on this work [here](https://github.com/MohamedElashri/Hadron-Collider-ML/blob/master/Searching_for_electromagnetic_showers.ipynb). Last but not least, hardware work in particle physics is essential as data analysis and it also requires some data analysis and a lot of programming ( I’m partially working on NOvA experiment hardware also) so taking some time and effort to play with optimizing a simple tracking system using Bayesian optimization with Gaussian processes would be an excellent last problem to tackle using ML in this course (look at [here](https://github.com/MohamedElashri/Hadron-Collider-ML/blob/master/Detector_Optimization.ipynb), and complete Github repository is [here](https://github.com/MohamedElashri/Hadron-Collider-ML)
+
+In the end, I would say that all this specialization follows the Russian learning way, through them at sea, to teach them how to swim. Some would argue against this, but I like this way, especially when I’ve connected two things I love, much like Particle physics and Machine learning.
+
+I hope that this might help someone interested to join this field as ML would be a promising tool that we will need in the next decades of our search for new physics and expand our knowledge about our physical world.
