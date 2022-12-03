@@ -7,6 +7,25 @@ comments: true
 keywords: "Monte Carlo, Ising Model, Python, Numba, Metropolis Algorithm"
 ---
 
+
+- [Introduction](#introduction)
+- [The Ising Model](#the-ising-model)
+- [Monte-Carlo Simulation](#monte-carlo-simulation)
+  - [Physical Model](#physical-model)
+  - [Python Implementation](#python-implementation)
+    - [Python code for Ising model](#python-code-for-ising-model)
+- [Results](#results)
+- [Reproduction](#reproduction)
+- [Appendix I](#appendix-i)
+- [Appendix II](#appendix-ii)
+  - [Results](#results-1)
+    - [python 3.11](#python-311)
+    - [python 3.10](#python-310)
+    - [python 3.9](#python-39)
+    - [python 3.8](#python-38)
+    - [Other versions](#other-versions)
+
+
 ## Introduction
 During my first year PhD at UC, I get the chance to take statistical mechanics class from a condensed matter physicist. It was a new experience when he focused too much on different side that I did not explore before. The final project in this class was about using Monte-Carlo method to simulate the Ising model. Ising model is a model of a system that undergoes a phase transition. There are many reasons why this model is interesting when it is not representing any actual physical systems.
 
@@ -269,7 +288,6 @@ def mc(s,Temp,n):
 And finally we implement the main function to calculate the energy and magnetization of the system. We will use the following function:
 
 ``` python
-
 # Compute physical quantities
 
 @jit(nopython=True, cache=True) 
@@ -314,15 +332,11 @@ And we initialize the arrays to store the values of the energy, magnetization an
 
 
 ``` python
-
 # Inititalize magnetization, average energy and heat capacity
 
 mag = np.zeros(len(Temperature))
-
 En_avg = np.zeros(len(Temperature))
-
 CV = np.zeros(len(Temperature))
-
 start = time.time()
 
 ```
@@ -330,7 +344,6 @@ start = time.time()
 Now we are ready to write for loop to sweep over the temperature range and calculate the energy, magnetization and specific heat capacity. We will use the following code:
 
 ``` python
-
 # Simulate at particular temperatures (T) and compute physical quantities
 
 for ind, T in enumerate(track(Temperature)):
@@ -356,8 +369,6 @@ print('It took ' + str(time) + ' minutes to execute the code')
 Now let's plot the results. We will use the following code that plots the energy, magnetization and specific heat capacity as a function of temperature:
 
 ```python
-
-
 f = plt.figure(figsize=(18, 10)); # plot the calculated values
 sp =  f.add_subplot(2, 2, 1 );
 plt.plot(Temperature, En_avg, marker='.', color='IndianRed')

@@ -6,6 +6,23 @@ keywords: "MiniBooNE, Particle, physics, particle-identification, Fermilab, ML, 
 comments: true
 ---
 -----------------------
+
+
+
+
+- [Introduction](#introduction)
+  - [Data](#data)
+  - [Evaluation](#evaluation)
+    - [Definitions](#definitions)
+  - [Models](#models)
+    - [Logistic regression](#logistic-regression)
+    - [K-nearest neighbors](#k-nearest-neighbors)
+    - [Decision Trees](#decision-trees)
+    - [Random Forest](#random-forest)
+  - [Conclusion](#conclusion)
+
+
+# Introduction
 In this blog post, I'm going to walk through about applying machine learning algorithms in particle physics. There are many available datasets ready for ML but one of a particular interest is the MiniBooNE dataset available on [UCI machine learning repository](https://archive.ics.uci.edu/ml/datasets/MiniBooNE+particle+identification). This dataset is used for a published [paper](https://inspirehep.net/literature/657972) from the experiment collaboration which is very interesting to read although it is somehow old. Particle Identification was part of the early success stories for machine learning and deep learning so it was applied since early 2000's. 
 
 ## Data
