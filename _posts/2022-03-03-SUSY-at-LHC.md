@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SUSY search in LHC"
+title: "SUSY search at LHC"
 description: "LHC search for SuperSymmetry .
 ."
 keywords: "SUSY, SuperSymmetry, physics, LHC, coursera"
