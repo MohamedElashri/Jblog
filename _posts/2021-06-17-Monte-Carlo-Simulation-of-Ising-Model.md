@@ -97,21 +97,23 @@ Algorithm
 
 #### Python code for Ising model
 
-```python
-#----------------------------------------------------------------------
+``` python
+
+
 ##  Import needed python libraries 
-#----------------------------------------------------------------------
+
 import matplotlib.pyplot as plt
 from numba import jit # wonderful optimization compiler. 
-import numpy as np  # we can't work in python without that in physics (maybe we can if we are not lazy enough)
-import random # we are doing MC simulation after all!!
-import time # for time estimation 
-from tqdm import tqdm # fancy progress bars for loops , use this line if working with .py script
-#from tqdm.notebook import tqdm # use this if working with jupyter notebook to avoid printing a new line for each iteration
-from rich.progress import track # we can use  rich library.change "tqdm" later to "track"
+import numpy as np  # for array and matrix operations
+import random # for random number generation
+import time # for timing the code 
+from tqdm import tqdm # for progress bar
+#from tqdm.notebook import tqdm # for progress bar in jupyter notebook
 ```
 
-```python
+Firrst, we need to define the parameters of the system. We will use the following parameters:
+
+``` python
 # Define parameters 
 
 B = 0; # Magnetic field strength
@@ -121,7 +123,10 @@ n= 1000 * L**2 # number of MC sweeps
 Temperature = np.arange(1.6,3.25,0.01) # Initlaize temperature range, takes form np.arange(start,stop,step)
 ```
 
-```python
+And after that we need to define the main function to calculate the energy of the system. We will use the following function:
+
+
+``` python
 # Define functions to compute energy and magnetization
 
 '''
@@ -141,17 +146,23 @@ def calcE(s):
 Calculate the Magnetization of a given configuration
 Magnetization is the sum of all spins divided by the total number of spins
 '''
-@jit(nopython=True, cache=True) # wonderful jit optimization compiler in its high performance mode
+@jit(nopython=True, cache=True) 
 def calcM(s):
     m = np.abs(s.sum())
     return m/L**2
 ```
 
-```python
-# Calculate interaction energy between spins. Assume periodic boundaries
+The next step is to define the function to calculate the change in energy due to a spin flip. We will use the following function:
+
+
+``` python
+# Calculate interaction energy between spins. Assume periodic boundaries.
+
 # Interaction energy will be the difference in energy due to flipping spin i,j 
+
 # (Example: 2*spin_value*neighboring_spins)
-@jit(nopython=True, cache=True) # wonderful jit optimization compiler in its high performance mode
+
+@jit(nopython=True, cache=True) 
 def dE(s,i,j): # change in energy function
     #top
     if i == 0:
@@ -176,9 +187,12 @@ def dE(s,i,j): # change in energy function
     return 2*s[i,j]*(t+b+r+l)  # difference in energy is i,j is flipped
 ```
 
-```python
+
+Now we implement the Metropolis Algorithm to flip the spin of a lattice site chosen randomly. We will use the following function:
+
+``` python
 # Monte-carlo sweep implementation
-@jit(nopython=True, cache=True) # wonderful jit optimization compiler in its high performance mode
+@jit(nopython=True, cache=True) 
 def mc(s,Temp,n):   
     for m in range(n):
         i = random.randrange(L)  # choose random row
@@ -191,9 +205,11 @@ def mc(s,Temp,n):
     return s
 ```
 
-```python
+And finally we implement the main function to calculate the energy and magnetization of the system. We will use the following function:
+
+``` python
 # Compute physical quantities
-@jit(nopython=True, cache=True) # wonderful jit optimization compiler in its high performance mode
+@jit(nopython=True, cache=True) 
 def physics(s,T,n):
     En = 0
     En_sq = 0
@@ -213,7 +229,10 @@ def physics(s,T,n):
     return En_avg, mag, CV
 ```
 
-```python
+And we initialize the arrays to store the values of the energy, magnetization and specific heat capacity. And we use `time()` function to calculate the time taken by the code to run. We will use the following code:
+
+
+``` python
 # Inititalize magnetization, average energy and heat capacity
 mag = np.zeros(len(Temperature))
 En_avg = np.zeros(len(Temperature))
@@ -222,8 +241,10 @@ CV = np.zeros(len(Temperature))
 start = time.time()
 ```
 
+Now we are ready to write for loop to sweep over the temperature range and calculate the energy, magnetization and specific heat capacity. We will use the following code:
+
 ``` python
-# Simulate at particular temperatures (T) and compute physical quantities (Energy, heat capacity and magnetization)
+# Simulate at particular temperatures (T) and compute physical quantities
 for ind, T in enumerate(track(Temperature)):
     # Sweeps spins
     s = mc(s,T,n)
@@ -236,13 +257,15 @@ time = (end - start)/60
 print('It took ' + str(time) + ' minutes to execute the code')
 ```
 
+Now let's plot the results. We will use the following code that plots the energy, magnetization and specific heat capacity as a function of temperature:
+
 ```python
-#----------------------------------------------------------------------
+
+#-----------------------------------------
 #  Plotting area
-#----------------------------------------------------------------------
 
 
-f = plt.figure(figsize=(18, 10)); # plot the calculated values  
+f = plt.figure(figsize=(18, 10)); # plot the calculated values
 sp =  f.add_subplot(2, 2, 1 );
 plt.plot(Temperature, En_avg, marker='.', color='IndianRed')
 plt.xlabel("Temperature (T)", fontsize=20);
