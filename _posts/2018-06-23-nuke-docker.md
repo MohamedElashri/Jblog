@@ -47,26 +47,32 @@ All of these can be written in a simple nice bash script for automation.
 ## Stop and remove all containers
 echo "Removing containers :"
 if [ -n "$(docker container ls -aq)" ]; then
+
   docker container stop $(docker container ls -aq);
+
   docker container rm $(docker container ls -aq);
 fi;
 
 ## Remove all images
 echo "Removing images :"
 if [ -n "$(docker images -aq)" ]; then
+
   docker rmi -f $(docker images -aq);
 fi;
 
 ## Remove all volumes
 echo "Removing volumes :"
 if [ -n "$(docker volume ls -q)" ]; then
+
   docker volume rm $(docker volume ls -q);
 fi;
 
 ## Remove all networks
 echo "Removing networks :"
 # Skip default networks : bridge, host, none
+
 if [ -n "$(docker network ls | awk '{print $1" "$2}' | grep -v 'ID\|bridge\|host\|none' | awk '{print $1}')" ]; then
+
   docker network rm $(docker network ls | awk '{print $1" "$2}' | grep -v 'ID\|bridge\|host\|none' | awk '{print $1}');
 fi;
 
@@ -75,6 +81,7 @@ fi;
 echo "Uninstall and clean docker :"
 
 if [ -n "$(dpkg -l | grep -i docker )" ]; then
+
   sudo apt-get purge -y docker-engine docker docker.io docker-ce;
   sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce;
   sudo rm -rf /var/lib/docker sudo rm /etc/apparmor.d/docker sudo groupdel docker sudo rm -rf /var/run/docker.sock;
