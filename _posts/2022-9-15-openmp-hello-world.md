@@ -28,8 +28,6 @@ In this post, I will show you how to write a simple "Hello, World!" example in C
 
 To write a "Hello, World!" example in C and OpenMP, you first need to include the OpenMP header file in your program. This header file provides the declarations and definitions of the OpenMP functions and macros that you can use in your code.
 
-To write a "Hello, World!" example in C and OpenMP, you first need to include the OpenMP header file in your program. This header file provides the declarations and definitions of the OpenMP functions and macros that you can use in your code.
-
 ``` c++
 #include <omp.h>
 ```

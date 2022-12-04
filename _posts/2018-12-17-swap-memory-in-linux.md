@@ -14,7 +14,7 @@ To create swap memory in Linux, you can use the `fallocate` command to create a 
 
 
 ``` bash
-sudo fallocate -l 1G /swapfile`
+sudo fallocate -l 1G /swapfile
 ```
 
 This command creates a file named `/swapfile` with a size of 1 GB (1024 MB) in the root directory.
