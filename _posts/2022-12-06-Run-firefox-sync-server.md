@@ -1,7 +1,7 @@
 ---
 published: true
 layout: post
-title: "self-hosted firefox sync server"
+title: "Self-hosted firefox sync server"
 description: "How to run firefox sync server on your own server"
 comments: true
 keywords: "firefox, sync, server, self-hosted, firefox sync server"
@@ -11,7 +11,7 @@ Firefox Sync is a powerful feature that allows you to keep your bookmarks, histo
 
 If you’re a privacy-conscious user like me, you may be hesitant to rely on Mozilla’s servers to store your data. Fortunately, it’s possible to run your own Firefox Sync server, giving you complete control over where your data is stored and how it is accessed. 
 
-In this blog post, I will walk you through the steps for setting up your own Firefox Sync server. This installation method is going to be docker based, so you will need to have docker installed on your server. If you don’t have docker installed, you can follow the instructions here to install it. You can find instructions for doing this on the [Docker website](https://docs.docker.com/engine/install/ubuntu/). Also you will need to install docker-compose, this is also available on the [Docker website](https://docs.docker.com/compose/install/).
+In this blog post, I will walk you through the steps for setting up your own Firefox Sync server. This installation method is going to be docker based, so you will need to have docker installed on your server. If you don’t have docker installed, you can follow the instructions here to install it. You can find instructions for doing this on the [Install Docker-Engine](https://docs.docker.com/engine/install/ubuntu/). Also you will need to install docker-compose, this is also available on the [Install docker-compose](https://docs.docker.com/compose/install/).
 
 Alternatively, you can use the following shell script to install docker and docker-compose on your server:
 
@@ -67,6 +67,7 @@ PGID=1000
 FF_SYNCSERVER_PUBLIC_URL=http://<server>.<domain>
 FF_SYNCSERVER_SECRET=736hdojh929jdmo
 FF_SYNCSERVER_ALLOW_NEW_USERS=true
+
 FF_SYNCSERVER_FORCE_WSGI_ENVIRON=false
 ```
 
