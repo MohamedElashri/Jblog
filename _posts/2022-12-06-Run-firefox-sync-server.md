@@ -73,17 +73,17 @@ FF_SYNCSERVER_FORCE_WSGI_ENVIRON=false
 
 The explnation for each of these variables is as follows:
 
-    - `TZ`: This variable specifies the time zone for the application or service. In this case, the value is set to America/NewYork, indicating that the time zone is Eastern Standard Time.
+- `TZ`: This variable specifies the time zone for the application or service. In this case, the value is set to America/NewYork, indicating that the time zone is Eastern Standard Time.
 
-    - `PUID` and `PGID`: These variables specify the user and group IDs for the application or service. In this case, the values are set to 1000, indicating that the application or service will run as the user and group with IDs 1000.
+- `PUID` and `PGID`: These variables specify the user and group IDs for the application or service. In this case, the values are set to 1000, indicating that the application or service will run as the user and group with IDs 1000.
 
-    - `FF_SYNCSERVER_PUBLIC_URL`: This variable specifies the public URL for the Firefox Sync server. In this case, the value is set to http://<server>.<domain>, indicating that the server is accessible at the specified domain name.
+- `FF_SYNCSERVER_PUBLIC_URL`: This variable specifies the public URL for the Firefox Sync server. In this case, the value is set to http://<server>.<domain>, indicating that the server is accessible at the specified domain name.
 
-    - `FF_SYNCSERVER_SECRET`: This variable specifies a secret value that is used to authenticate requests to the Firefox Sync server. In this case, the value is a long, random string of characters.
+- `FF_SYNCSERVER_SECRET`: This variable specifies a secret value that is used to authenticate requests to the Firefox Sync server. In this case, the value is a long, random string of characters.
 
-    - `FF_SYNCSERVER_ALLOW_NEW_USERS`: This variable specifies whether new users are allowed to register for the Firefox Sync server. In this case, the value is set to true, indicating that new users are allowed to register.
+- `FF_SYNCSERVER_ALLOW_NEW_USERS`: This variable specifies whether new users are allowed to register for the Firefox Sync server. In this case, the value is set to true, indicating that new users are allowed to register.
 
-    - `FF_SYNCSERVER_FORCE_WSGI_ENVIRON`: This variable specifies whether the WSGI environment should be forced when running the Firefox Sync server. In this case, the value is set to false, indicating that the WSGI environment will not be forced.
+- `FF_SYNCSERVER_FORCE_WSGI_ENVIRON`: This variable specifies whether the WSGI environment should be forced when running the Firefox Sync server. In this case, the value is set to false, indicating that the WSGI environment will not be forced.
 
 
 Once you’ve created your docker-compose.yml file and added your `firefox.env` file, you can start your Firefox Sync container by running the following command:
