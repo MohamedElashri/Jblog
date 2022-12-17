@@ -7,9 +7,10 @@ url           : https://blog.melashri.net # site url
 baseurl       : "" # apply repo name like "/myproject" if used under gh-pages branch, else (under master branch) just leave empty/blank
 cover         : "" # image uri like logo/cover image for site seo
 
-twitter_username  : ""
+twitter_username  : "MohamedElashri"
 comments_enabled  : true #
 postshare_enabled : false
+
 
 # Build settings
 permalink   : /:year/:title/
