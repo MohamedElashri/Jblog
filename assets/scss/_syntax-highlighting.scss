@@ -1,13 +1,19 @@
 /**
 * Syntax highlighting styles
 */
+
+
+
+
 .highlight {
   margin: $base-spacing 0;
   padding: 0;
   box-shadow: 0px 0px 2px rgba($black-color, .1);
+  background: #fff;
 
   .highlighter-rouge &, &, .hll, pre, code {
-    background-color: lighten($light-gray-color, 15%) !important;
+    //background-color: lighten($light-gray-color, 15%) !important;
+    background: #eef;
     overflow: visible; // Prevents horizontal scrollbars
     // adjust code box to code length
     max-width: 100%;    
@@ -34,6 +40,12 @@
     code {
       white-space: pre;
       padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      background: none !important;
+      font-size: 1em;
+      font-family: $base-font-family;
+    
 
       * {
         white-space: nowrap; // this sets all children inside to nowrap
