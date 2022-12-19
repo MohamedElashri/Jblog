@@ -82,21 +82,7 @@ import math
 import numpy as np
 
 def generate_random_configuration(n, p):
-    """
-    Generate a random configuration of the system.
 
-    
-    Parameters:
-
-        n (int): Number of particles in the system.
-
-        p (float): Probability of flipping the spin of a particle.
-        
-    Returns:
-
-        list: A list of n spins, where each element is 1 or -1.
-        
-    """
     spins = []
     for i in range(n):
         if random.random() < p:
@@ -115,14 +101,7 @@ Once we have a way to store the state of the system and calculate the energy, we
 
 ``` python
 def calculate_energy(spins):
-    """Calculate the energy of a configuration.
     
-    Parameters:
-        spins (list): The configuration of the system.
-        
-    Returns:
-        float: The energy of the configuration.
-    """
     n = len(spins)
     energy = 0
     for i in range(n-1):
@@ -135,15 +114,6 @@ Next, we will need to define a function that performs a single Monte Carlo step.
 
 ``` python
 def monte_carlo_step(spins, temperature):
-    """Perform a single Monte Carlo step.
-    
-    Parameters:
-        spins (list): The current configuration of the system.
-        temperature (float): The temperature of the system.
-        
-    Returns:
-        list: The new configuration of the system.
-    """
 
     n = len(spins)
 
@@ -169,16 +139,6 @@ Finally, we will need to define a function that runs the Monte Carlo simulation 
 
 ``` python
 def monte_carlo_simulation(n, temperature, steps):
-    """Run the Monte Carlo simulation.
-    
-    Parameters:
-        n (int): Number of particles in the system.
-        temperature (float): The temperature of the system.
-        steps (int): Number of Monte Carlo steps to perform.
-        
-    Returns:
-        list: The final configuration of the system.
-    """
 
     # Generate a random initial configuration
 
