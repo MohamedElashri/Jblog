@@ -1,8 +1,8 @@
 ---
 published: true
 layout: post
-title: "Monte Carlo Simulation of Ising Model"
-description: "Monte Carlo Simulation of Ising Model using Metropolis algorithm Python and Numba"
+title: "Monte Carlo Simulation of 2D Ising Model"
+description: "Monte Carlo Simulation of 2D Ising Model using Metropolis algorithm Python and Numba"
 comments: true
 keywords: "Monte Carlo, Ising Model, Python, Numba, Metropolis Algorithm"
 ---
