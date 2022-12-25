@@ -38,21 +38,29 @@ During my first year PhD at UC, I get the chance to take statistical mechanics c
 ## The Ising Model
 We can think of Ising model as a mathematical model where everything consists of small squares inside a bigger one. It is usually called lattices where we then have a big lattice of sites (small boxes) where each site can be in one of two states. Those states as we will see will refer to the spin state of the electron inside this site. Each site will be labeled by index ii. The Hamiltonian for the Ising model can be written as
 
-\[ \mathcal{H}=-J \sum_{\langle i j\rangle} S_i S_j \]
+
+{% katex display %}
+\mathcal{H}=-J \sum_{\langle i j\rangle} S_i S_j
+{% endkatex %}
+
 
 
 ![Lattice square representation of Ising model, https://stanford.edu/~jeffjar/statmech/intro4.html](/assets/images/posts/ising/ising.jpg){: .center-image }
-
-
-- Spin \( S_i \) has value of +1 or -1
-- \( \langle i j\rangle \) implying that we are interested in nearest-neighbor interaction only
-- \( J \) is the interaction strength where \( J>0 \) assuming that strength is positive. 
+{% katexmm %}
+- Spin $S_i$  has value of +1 or -1. 
+- $  i j $ implying that we are interested in nearest-neighbor interaction only. 
+- $J$  is the interaction strength where \( J>0 \) assuming that strength is positive.  
+{% endkatexmm %}
 
 There are many systems that can be represented using this model like "lattice gas" with each of the sites is the possible location of a particle;  means that site is empty and  means that site is occupied by a particle.
 
-This system will undergo a 2nd order phase transition at some temperature \(T=T_c \) which is called critical temperature. For cases when \(T < T_c \), the system magnetizes, and the state is called the ferromagnetic state which is an ordered state. For cases when \(T > T_c \)​,  the system is  disordered or in a paramagnetic state. We can define the order parameter for this system to be the average magnetization \(m \).
+{% katexmm %}
+This system will undergo a 2nd order phase transition at some temperature $T=T_c$ which is called critical temperature. For cases when $T < T_c$, the system magnetizes, and the state is called the ferromagnetic state which is an ordered state. For cases when T > T_c ​,  the system is  disordered or in a paramagnetic state. We can define the order parameter for this system to be the average magnetization $m$.
+{% endkatexmm %}
 
-\[ m=\frac{\langle S\rangle}{N} \]
+{% katex display %}
+m=\frac{\langle S\rangle}{N}
+{% endkatex %}
 
 This parameter is used to distinguish between the two phases that this system can have. It is zero when we are in disordered (paramagnetic) state and takes a non-zero value in ordered (ferromagnetic) state.
 
@@ -84,7 +92,9 @@ Each lattice point is denoted by a number i in the Hamiltonian.
 
 The expression for the Energy of the total system is 
 
-\[ H=-J \sum_{i=0}^{N-1} \sum_{j=0}^{N-1}\left(s_{i, j} s_{i, j+1}+s_{i, j} s_{i+1, j}\right) \]
+{% katex display %}
+H=-J \sum_{i=0}^{N-1} \sum_{j=0}^{N-1}\left(s_{i, j} s_{i, j+1}+s_{i, j} s_{i+1, j}\right)
+{% endkatex %}
 
 ```
 * * * * * * * * 
@@ -93,8 +103,10 @@ The expression for the Energy of the total system is
 * * * * * * * *
 * * * * * * * *
 ```
-Periodical structure means that lattice point at(1,1) is the same as that at(1,9) if the lattice is 5 x 8. For example (1,1)<=>(6,1), (2,3)<=>(2,11). A 2D lattice can be any \( N_x \) by \(N_y \). The location \( (x,y) \) here is another denotion of lattice point that is fundamentally same as i-th lattice point denotation above.
 
+{% katexmm %}
+Periodical structure means that lattice point at(1,1) is the same as that at(1,9) if the lattice is 5 x 8. For example (1,1)<=>(6,1), (2,3)<=>(2,11). A 2D lattice can be any  $N_x$ by $N_y$. The location $(x,y)$ here is another denotion of lattice point that is fundamentally same as i-th lattice point denotation above.
+{% endkatexmm %}
 ```
 * * * * * * * * 4
 * * * * * * * * 3
@@ -398,7 +410,6 @@ These are plots of the physical quantities for different MC steps.
 
 ![Simulation results for 50*50 lattice with 500000 steps](/assets/images/posts/ising/plot_1.png){: .center-image }
 
-![Simulation results for 50*50 lattice with 250000 steps](/assets/images/posts/ising/plot_2.png){: .center-image }
 
 
 ## Reproduction
