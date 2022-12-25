@@ -4,6 +4,7 @@ layout: post
 title: "Monte Carlo Simulation of 2D Ising Model"
 description: "Monte Carlo Simulation of 2D Ising Model using Metropolis algorithm Python and Numba"
 comments: true
+jektex: true
 keywords: "Monte Carlo, Ising Model, Python, Numba, Metropolis Algorithm"
 ---
 
