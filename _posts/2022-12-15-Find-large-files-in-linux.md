@@ -1,4 +1,5 @@
 ---
+layout: post
 published: true
 title: "Find large files in linux"
 description: "How to find large files in linux using find command ."

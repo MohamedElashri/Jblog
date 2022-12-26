@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Remove PHP extension from URL"
-date: 2022-12-23 4:00:00
 categories: [PHP, Web Development, Server, .htaccess]
-tags: [PHP, Web Development, Server, .htaccess]
+keywords: "PHP, Web Development, Server, .htaccess"
 comments: true
 ---
 
