@@ -23,6 +23,6 @@ jobs:
     # Standard usage
     - uses:  helaili/jekyll-action@master
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ github.token }}
         target_branch: 'gh-pages'
         pre_build_commands: apk --update add nodejs
