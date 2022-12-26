@@ -26,4 +26,3 @@ jobs:
         token: ${{ github.token }}
         target_branch: 'gh-pages'
         pre_build_commands: apk --update add nodejs
-Symbols
