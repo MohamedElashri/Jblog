@@ -1,5 +1,5 @@
 ---
-post: post
+layout: post
 title: "Restore deleted files from lxplus"
 categories: [Linux, Server, CERN, lxplus]
 keywords: "Linux, Server, CERN, lxplus"
