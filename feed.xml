@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <description>A collection of notes about physics, programming and personal thoughts.</description>
+    <link>https://blog.melashri.net/</link>
+    <atom:link href="https://blog.melashri.net/feed.xml" rel="self"
+      type="application/rss+xml" />
+    <pubDate>Wed, 01 Feb 2023 16:29:10 +0000</pubDate>
+    <lastBuildDate>Wed, 01 Feb 2023 16:29:10 +0000</lastBuildDate>
+    <generator>Jekyll v4.0.1</generator>
+    
+    <item>
+      <title>How to install Copilot on lxplus</title>
+      <description>&lt;p&gt;I have been relying on connecting to lxplus on vsocde. But recently I got a lot of problems with the connection and probably some problem with vsocde server causing memory leaks which sometime resluted in automated email from CERN IT that I’m using too much memory. I was not happy with this and then I had to resort to the old fashion connection via terminal. Then I needed my favourite tool to help me when I’m writing code, of course I’m talking about github copilot. I grow dependence on that tool and how easy it makes editing and filling those historgram trees and vectors. Copilot is available for limited number of editors, it is currently available only for VSCode, JetBrains IDEs and vim/Nvim. My favourite terminal editor is vim anyway. I even had this in my vimrc file:&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; EDITOR&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;vim&lt;/span&gt; # Viva &lt;span class=&quot;k&quot;&gt;vim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; Death &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; Emacs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Sorry for Emacs folks but even &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt; is still better. The problem is to install copilot on vim/Nvim you need &lt;code class=&quot;highlighter-rouge&quot;&gt;vim 9.0.0185&lt;/code&gt; or newer. lxplus default vim version is very old and stucked for &lt;code class=&quot;highlighter-rouge&quot;&gt;vim ~ 7&lt;/code&gt; for some reason. I had to build vim from source and install it as non-root user. Here I will explain how to do this:&lt;/p&gt;
+
+&lt;p&gt;The first part is downloading the vim source code. you can download the latest source from &lt;a href=&quot;https://www.vim.org/download.php&quot;&gt;vim download page&lt;/a&gt;. First lets create a directory in our home to put the source and install&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/private 
+&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;myvim &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;myvim
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next lets download the vim source code and extract the tar archive&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://ftp.nluug.nl/pub/vim/unix/vim-9.0.tar.bz2 &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tar &lt;/span&gt;xvf vim-9.0.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now lets change into the Vim source directory&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;vim-9.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We need to configure the build process, making sure to specify a prefix directory where you have write permissions (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;~/local&lt;/code&gt;):&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ./configure &lt;span class=&quot;nt&quot;&gt;--prefix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The next step is to compile and install Vim:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To overwrite the pre-existing version of Vim with the one you installed in your local directory, you’ll need to ensure that the executable in your local directory is found first in your PATH. You can do this by modifying your shell profile (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bash_profile&lt;/code&gt;, or &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.zshrc&lt;/code&gt;) to add the following line at the end:&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; PATH&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;$HOME&lt;span class=&quot;sr&quot;&gt;/local/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;$PATH
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will make the vim executable in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/local/bin&lt;/code&gt; the first one that is found when you run vim in your terminal, effectively overwriting the pre-existing version. Remember to restart your terminal or source the shell profile after making these changes for the changes to take effect: source ~/.bashrc (or equivalent for your shell).&lt;/p&gt;
+
+&lt;p&gt;Now we need to install the copilot plugin for vim. We first need to determine the location of Vim’s runtime directory, which is typically &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vim &lt;/code&gt;or &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.local/share/vim&lt;/code&gt;. We can determine the location of the runtime directory by running the following command in Vim:&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;echo &amp;amp;&lt;span class=&quot;nb&quot;&gt;runtimepath&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This will display a list of directories separated by commas, where Vim looks for its runtime files. The first directory in the list is the primary runtime directory.&lt;/p&gt;
+
+&lt;p&gt;Next, you’ll need to download the extension you want to install and place it in the appropriate subdirectory of the runtime directory. The subdirectory depends on the type of extension:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Plugins&lt;/code&gt; should be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vim/pack/plugins/start&lt;/code&gt; directory.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Colorschemes&lt;/code&gt; should be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vim/colors&lt;/code&gt; directory.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Syntax files&lt;/code&gt; should be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vim/syntax&lt;/code&gt; directory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To install copilot we can use the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/github/copilot.vim.git &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  ~/.vim/pack/github/start/copilot.vim
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can open vim and start copilot setup to link to our github account. To start copilot setup we can use the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;Copilot setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will give you token and link to open on your devcie (open link in browser) and then paste the token into the page that appears in browser and then wait a couple of seconds for the setup to complete. If successful, you can start using copilot by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;:Copilot&lt;/code&gt; in vim.&lt;/p&gt;
+
+&lt;p&gt;I hope this helps you to install copilot on lxplus. If you have any questions or comments please leave them below. Thanks for reading.&lt;/p&gt;
+
+</description>
+      <pubDate>Wed, 01 Feb 2023 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2023/copilot-on-cern-lxplus/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2023/copilot-on-cern-lxplus/</guid>
+      
+      
+      <category>Linux</category>
+      
+      <category>Server</category>
+      
+      <category>CERN</category>
+      
+      <category>lxplus</category>
+      
+    </item>
+    
+    <item>
+      <title>Restore deleted files from lxplus</title>
+      <description>&lt;p&gt;Earlier today I was trying to connect my VScode to lxplus and I was unable. I was trying to connect to particular working folder but it seems that vscode can’t find this folder. This was strange so I opened my terminal and then sshed to lxplus. I was surprised to find that this folder on my work directory is not there. This was annoying as it contains some MC files I generated locally which took somedays (as I still early in my analysis and don’t have a GRID ready analysis). The idea of having of having to generate all of them again was not good by any mean. I don’t have time for that. Beside in the process of generating them I was very annoying for CERN as I got many warning emails from CERN about my high memory usage (yes Gauss is a RAM monester). The source code for Gauss-job and analysis scripts weren’t a problem as I always have them pushed to a git repository on my github account. So I was able to recover them from there. But the MC files were a problem.&lt;/p&gt;
+
+&lt;p&gt;Now I was hoping there was a way to restore the deleted files. I went to Twiki and looked for a solution and found an article that describes the process. I was happy for know that all &lt;code class=&quot;highlighter-rouge&quot;&gt;afs&lt;/code&gt; is being backuped regularly. Also they backup personal &lt;code class=&quot;highlighter-rouge&quot;&gt;home&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;work&lt;/code&gt; spaces for each user. There is a difference however between both of them as the files stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;home&lt;/code&gt; and deleted are cached and you don’t need to get them from &lt;code class=&quot;highlighter-rouge&quot;&gt;tape&lt;/code&gt;. Anyway it was good to know that &lt;code class=&quot;highlighter-rouge&quot;&gt;home&lt;/code&gt; directory is backed each night (CERN time) and cached inside &lt;code class=&quot;highlighter-rouge&quot;&gt;/afs/cern.ch/ubackup/m/melashri/*&lt;/code&gt; where I could easily find the deleted files (up to 24 hours) beside other files. But actually my MC files were on &lt;code class=&quot;highlighter-rouge&quot;&gt;work&lt;/code&gt; directory which is not cached. The backup are actually on tape which is slow to restore and process it a little bit more involved than just move the files back.&lt;/p&gt;
+
+&lt;p&gt;To store the files, the first was to create an empty folder with the following&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;afs_admin recover /afs/cern.ch/work/m/melashri/&amp;lt;path_to_my_missing_files&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The output asked me what backup I would like to recover. I chosed the latest one and then it will take sometime (long time) to restore the files. The backup will be written to a temporary folder and then you need to move the files to the correct location. The output will give you the path to the temporary folder. I then moved the files to the correct location.&lt;/p&gt;
+
+&lt;p&gt;This was my first day after the new year holiday and I was feeling horrible that I had this issue. I don’t recall what happened last week that could lead to this but anyway I was happy that everything worked out and now I can continue struggling with my analysis.&lt;/p&gt;
+</description>
+      <pubDate>Wed, 04 Jan 2023 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2023/restore-deleted-files-from-lxplus/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2023/restore-deleted-files-from-lxplus/</guid>
+      
+      
+      <category>Linux</category>
+      
+      <category>Server</category>
+      
+      <category>CERN</category>
+      
+      <category>lxplus</category>
+      
+    </item>
+    
+    <item>
+      <title>Remove PHP extension from URL</title>
+      <description>&lt;p&gt;I always found the &lt;code class=&quot;highlighter-rouge&quot;&gt;.php&lt;/code&gt; at the end of some website pages I visit (and when I used wordpress) very unattractive and annoying. I wanted to remove it. I found a way to do it using &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file. I will show you how to do it. If you want to remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;.php&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.html&lt;/code&gt;, or &lt;code class=&quot;highlighter-rouge&quot;&gt;.htm&lt;/code&gt; extensions from your website’s URLs, you can do so by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file. This file is a configuration file that allows you to control various aspects of your website’s behavior, including how URLs are displayed to visitors. We will rely on the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; ability to rewrite URLs to remove the extensions from the URLs.&lt;/p&gt;
+
+&lt;p&gt;The first thing is to make sure that your website is hosted on a server that supports the use of &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; files. Not all servers support this file, so check with your hosting provider if you’re not sure. There are many servers that do not support &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; files, so if you’re using one of these, you’ll need to find another way to remove the extensions from your URLs. One famous example of the server that supports &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; files is Apache.&lt;/p&gt;
+
+&lt;p&gt;We create the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file in the root directory which is usually the same directory as your index.php or index.html file. You can create the file using any text editor. If you’re using a Mac, you can use TextEdit. If you’re using Windows, you can use Notepad. If you’re using Linux, you can use any text editor you like. You can also use an FTP client to create the file. If you’re using FileZilla, you can right-click on the root directory and select New File. Then, you can name the file &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; and save it.&lt;/p&gt;
+
+&lt;p&gt;P.S: I don’t recommend using FTP protocol to create the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file. It’s better to use SFTP or SSH protocol. I know that this might not be possible for some people on some shared hosting plans, but if you have the option, I recommend using SFTP or SSH protocol.&lt;/p&gt;
+
+&lt;p&gt;Now, we need to add the following code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.htm -f
+RewriteRule ^(.*)$ $1.htm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This code tells the server to rewrite any URL that ends in .php, .html, or .htm to the same URL without the extension. For example, if a visitor requests the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about.php&lt;/code&gt;, the server will rewrite the URL to &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about&lt;/code&gt; and serve the content from the &lt;code class=&quot;highlighter-rouge&quot;&gt;about.php&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;If you’re using WordPress, you can add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file in the root directory of your WordPress installation. If you’re using another CMS, you can add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file in the root directory of your website. Save your .htaccess file and upload it to your server. Your changes should take effect immediately, and you should now be able to access your website’s pages without the extensions.&lt;/p&gt;
+
+&lt;p&gt;It’s worth noting that removing the extensions from your URLs can make it harder for search engines to understand the content of your pages. You may want to consider using other methods, such as using descriptive URLs or using the rel=”canonical” tag, to help search engines understand the content of your pages. For example if you have a page with the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about.php&lt;/code&gt;, you can use the rel=”canonical” tag to tell search engines that the page with the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about&lt;/code&gt; is the canonical version of the page. This will help search engines understand that the page with the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about&lt;/code&gt; is the same page as the page with the URL &lt;code class=&quot;highlighter-rouge&quot;&gt;www.melashri.net/about.php&lt;/code&gt;. The code for the rel=”canonical” tag is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;link rel=&quot;canonical&quot; href=&quot;https://www.melashri.net/about&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can add this code to the head section of your page. You can also add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file. If you’re using WordPress, you can add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;functions.php&lt;/code&gt; file in your theme’s directory. If you’re using another CMS, you can add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;header.php&lt;/code&gt; file in your theme’s directory. You can also add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;index.php&lt;/code&gt; file in your theme’s directory. If you’re using a static website (like me), you can add this code to the &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file in your website’s root directory.&lt;/p&gt;
+
+</description>
+      <pubDate>Fri, 23 Dec 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/remove-php-extension-from-url/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/remove-php-extension-from-url/</guid>
+      
+      
+      <category>PHP</category>
+      
+      <category>Web Development</category>
+      
+      <category>Server</category>
+      
+      <category>.htaccess</category>
+      
+    </item>
+    
+    <item>
+      <title>Find large files in linux</title>
+      <description>&lt;p&gt;Finding large files in Linux can be useful for a variety of reasons, such as identifying files that are taking up a lot of space on your hard drive or looking for files that may contain unnecessary or duplicate information. Here is a tutorial on how to find large files in Linux using the command line:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open a terminal window. You can do this by pressing &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl+Alt+T&lt;/code&gt; or by clicking on the terminal icon in your taskbar or application launcher.&lt;/li&gt;
+  &lt;li&gt;Change to the directory where you want to search for large files. For example, if you want to search for large files in your home directory, you can enter the following command:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use the &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; command to search for large files. The find command allows you to search for files based on various criteria, such as the file name, size, and type. To search for large files, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;-size&lt;/code&gt; option followed by a &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; sign and the size of the files you want to find. For example, to find files that are larger than 100MB in the current directory, you can use the following command:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -size +100M
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will search for all files in the current directory and its subdirectories that are larger than 100MB and display the names and paths of those files.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You can also use the &lt;code class=&quot;highlighter-rouge&quot;&gt;du&lt;/code&gt; command to find the sizes of directories and subdirectories. The &lt;code class=&quot;highlighter-rouge&quot;&gt;du&lt;/code&gt; command displays the sizes of directories and files in a directory tree, starting from the current directory. To find the sizes of directories and subdirectories in the current directory, you can use the following command:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;du -sh *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will display the sizes of the directories and subdirectories in the current directory, along with their names.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;To sort the output of the &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;du&lt;/code&gt; command in descending order by size, you can use the sort command. For example, to sort the output of the &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; command in descending order by size, you can use the following command:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -size +100M | sort -nr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will display the names and sizes of the large files in the current directory and its subdirectories, sorted in descending order by size.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;To save the output of the &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;du&lt;/code&gt; command to a file, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; operator followed by the file name. For example, to save the output of the &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt; command to a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;large_files.txt&lt;/code&gt;, you can use the following command:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -size +100M &amp;gt; large_files.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will create a new file called large_files.txt in the current directory and save the output of the find command to it.&lt;/p&gt;
+
+&lt;p&gt;If you want to find files in your all filesystem, but not external devices or network file systems you can use the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo find / -xdev -type f -size +100M
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-xdev&lt;/code&gt; option tells find to skip directories that are on different file systems. This can be useful if you want to search only the current file system and not external devices or network file systems. The &lt;code class=&quot;highlighter-rouge&quot;&gt;-type f&lt;/code&gt; option tells find to search only for files, not directories.&lt;/p&gt;
+
+&lt;p&gt;I hope this tutorial helps you find large files in Linux! Let me know if you have any questions.&lt;/p&gt;
+
+</description>
+      <pubDate>Thu, 15 Dec 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/Find-large-files-in-linux/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/Find-large-files-in-linux/</guid>
+      
+      
+      <category>linux</category>
+      
+    </item>
+    
+    <item>
+      <title>Self-hosted firefox sync server</title>
+      <description>&lt;p&gt;Firefox Sync is a powerful feature that allows you to keep your bookmarks, history, and other data in sync across all of your devices. It’s a great way to ensure that your favorite websites and browsing habits are always with you, no matter where you are.&lt;/p&gt;
+
+&lt;p&gt;If you’re a privacy-conscious user like me, you may be hesitant to rely on Mozilla’s servers to store your data. Fortunately, it’s possible to run your own Firefox Sync server, giving you complete control over where your data is stored and how it is accessed.&lt;/p&gt;
+
+&lt;p&gt;In this blog post, I will walk you through the steps for setting up your own Firefox Sync server. This installation method is going to be docker based, so you will need to have docker installed on your server. If you don’t have docker installed, you can follow the instructions here to install it. You can find instructions for doing this on the &lt;a href=&quot;https://docs.docker.com/engine/install/ubuntu/&quot;&gt;Install Docker-Engine&lt;/a&gt;. Also you will need to install docker-compose, this is also available on the &lt;a href=&quot;https://docs.docker.com/compose/install/&quot;&gt;Install docker-compose&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can use the following shell script to install docker and docker-compose on your server:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+apt-get update &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; apt-transport-https ca-certificates curl software-properties-common
+
+&lt;span class=&quot;nb&quot;&gt;sudo mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /etc/apt/keyrings
+ 
+
+curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://download.docker.com/linux/ubuntu/gpg | &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--dearmor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /etc/apt/keyrings/docker.gpg
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;dpkg &lt;span class=&quot;nt&quot;&gt;--print-architecture&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+  
+  &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-cs&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stable&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sudo tee&lt;/span&gt; /etc/apt/sources.list.d/docker.list &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /dev/null
+
+apt-get update &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+
+apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;docker-ce docker-ce-cli containerd.io docker-compose-plugin &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, create a file called docker-compose.yml in a new directory on your server. This file will contain the configuration for your Firefox Sync server. In this file you will need to add the following configuration:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;firefox-syncserver&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;crazymax/firefox-syncserver:latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;firefox&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;published&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tcp&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/home/&amp;lt;user&amp;gt;/firefox-sync/data:/data&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;env_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/home/&amp;lt;user&amp;gt;/firefox-sync/firefox.env&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;firefox-syncserver&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This configuration will create a docker container that will run the Firefox Sync server. It will also create a volume that will store the data for the server. You will need to replace the &lt;user&gt; with your username on the server. You can also change the port that the server is running on, if you want to. One important thing is that you will need to pass a .env file to the container. This file will contain the configuration for the server. You can find an example of this file in the following code&lt;/user&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;America/NewYork
+&lt;span class=&quot;nv&quot;&gt;PUID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000
+&lt;span class=&quot;nv&quot;&gt;PGID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000
+&lt;span class=&quot;nv&quot;&gt;FF_SYNCSERVER_PUBLIC_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;http://&amp;lt;server&amp;gt;.&amp;lt;domain&amp;gt;
+&lt;span class=&quot;nv&quot;&gt;FF_SYNCSERVER_SECRET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;736hdojh929jdmo
+&lt;span class=&quot;nv&quot;&gt;FF_SYNCSERVER_ALLOW_NEW_USERS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;FF_SYNCSERVER_FORCE_WSGI_ENVIRON&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The explnation for each of these variables is as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TZ&lt;/code&gt;: This variable specifies the time zone for the application or service. In this case, the value is set to America/NewYork, indicating that the time zone is Eastern Standard Time.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PUID&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;PGID&lt;/code&gt;: These variables specify the user and group IDs for the application or service. In this case, the values are set to 1000, indicating that the application or service will run as the user and group with IDs 1000.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FF_SYNCSERVER_PUBLIC_URL&lt;/code&gt;: This variable specifies the public URL for the Firefox Sync server. In this case, the value is set to http://&lt;server&gt;.&lt;domain&gt;, indicating that the server is accessible at the specified domain name.&lt;/domain&gt;&lt;/server&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FF_SYNCSERVER_SECRET&lt;/code&gt;: This variable specifies a secret value that is used to authenticate requests to the Firefox Sync server. In this case, the value is a long, random string of characters.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FF_SYNCSERVER_ALLOW_NEW_USERS&lt;/code&gt;: This variable specifies whether new users are allowed to register for the Firefox Sync server. In this case, the value is set to true, indicating that new users are allowed to register.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;FF_SYNCSERVER_FORCE_WSGI_ENVIRON&lt;/code&gt;: This variable specifies whether the WSGI environment should be forced when running the Firefox Sync server. In this case, the value is set to false, indicating that the WSGI environment will not be forced.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Once you’ve created your docker-compose.yml file and added your &lt;code class=&quot;highlighter-rouge&quot;&gt;firefox.env&lt;/code&gt; file, you can start your Firefox Sync container by running the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-compose up &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will pull the crazymax/firefox-syncserver image from the Docker Hub, create a new container using the configuration in your docker-compose.yml file, and start the container in the background. After your container is up and running, you can configure your Firefox browser to use your new Sync server. This can be done by going to the Sync settings in Firefox and entering the URL for your server. To do this you will need to modify &lt;code class=&quot;highlighter-rouge&quot;&gt;identity.sync.tokenserver.uri&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;about:config&lt;/code&gt; . First you will need to go to &lt;code class=&quot;highlighter-rouge&quot;&gt;about:config&lt;/code&gt; and then search for &lt;code class=&quot;highlighter-rouge&quot;&gt;identity.sync.tokenserver.uri&lt;/code&gt; and change the value to the URL of your server. You can find the default value for this variable to be:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://token.services.mozilla.com/1.0/sync/1.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You will need to change this value to the URL of your server. Adjust the URL to match the domain name of your server. For example, if your server is running at &lt;code class=&quot;highlighter-rouge&quot;&gt;https://&amp;lt;server&amp;gt;.&amp;lt;domain&amp;gt;&lt;/code&gt;, you will need to change the value to:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://&amp;lt;server&amp;gt;.&amp;lt;domain&amp;gt;/1.0/sync/1.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once you’ve done that, you’ll be able to start syncing your data to your own server. You can then use the same account on all of your other devices to keep your data in sync across all of them.&lt;/p&gt;
+</description>
+      <pubDate>Tue, 06 Dec 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/Run-firefox-sync-server/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/Run-firefox-sync-server/</guid>
+      
+      
+    </item>
+    
+    <item>
+      <title>How to modify particles in LHCb Gauss</title>
+      <description>&lt;hr /&gt;
+
+&lt;p&gt;I am currently working on a new analysis at LHCb. I’m trying to invistigate the possibility of long lived stau decaying to a gravitino and a tau. This is a scenario predicted by Gauge Mediated Supersymmetry Breaking (GMSB) SuperSymmetric (SUSY) model. The  very light gravitino in this model will be the lightest particle with stau being next leading particle (NLP). There is little interest shown in the past into probing phase space so this leaves a gap in exploration. LHCb detector provides a unique opportunity because of its long tracker. This would allow us to probe higher lifetimes with potential high sensitivity. As this a very new signal and SUSY is not something established into LHCb software yet, I found myself dealing with a lot of things but also I enjou learning. I will try to write about some of these things as a way of documenting things here.&lt;/p&gt;
+
+&lt;p&gt;Gauss, the software package used for simulation inside LHCb provides information about particles through simple txt file stored in DDDB package under &lt;code class=&quot;highlighter-rouge&quot;&gt;param/ParticleTable.txt&lt;/code&gt;. Gauss scrape the following information from the file.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Particle GeantID PDGID CHARGE MASS(GeV) LIFETIME(s) EVTGENNAME PYTHIAID MAXWIDTH
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For example, for Kaon+ it would be&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;K*_2(1430)0         153         315  0.0        0.100000   1.0e-10                    K_2*0         315        0.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For all SUSY particles and most of non standard model particles you will &lt;a href=&quot;https://gitlab.cern.ch/lhcb-conddb/DDDB/-/blob/master/param/ParticleTable.txt&quot;&gt;find&lt;/a&gt; default values that is not right (except of IDs)&lt;/p&gt;
+
+&lt;p&gt;For example for stau and its anti particles&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ~tau_1-               879     1000015  &lt;span class=&quot;nt&quot;&gt;-1&lt;/span&gt;.0    500.00000000      0.000000e+00                   unknown     1000015      0.00000000
+ ~tau_1+               880    &lt;span class=&quot;nt&quot;&gt;-1000015&lt;/span&gt;   1.0    500.00000000      0.000000e+00                   unknown    &lt;span class=&quot;nt&quot;&gt;-1000015&lt;/span&gt;      0.00000000 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I wanted a way to specify the Mass and lifetime of generated staus because I wanted to generate different samples for my study. One way to do that was to play with width and mass values inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;SLHA&lt;/code&gt; file that I generated from &lt;code class=&quot;highlighter-rouge&quot;&gt;IsaJet&lt;/code&gt; which I found some people at CMS do. I didn’t like this solution as there are some unintended consequences for that. Forunetnley there is a method called &lt;code class=&quot;highlighter-rouge&quot;&gt;ParticlePropertySvc&lt;/code&gt; the I found mention about in one of the rare occasion where I find a &lt;a href=&quot;https://twiki.cern.ch/twiki/bin/view/LHCb/FAQ/LHCbFAQ#How_do_I_modify_the_entries_of_t&quot;&gt;Twiki page&lt;/a&gt; useful.&lt;/p&gt;
+
+&lt;p&gt;So I wanted to generate staus with long life time enough to be in order of meters. If I’m taking the maximum value of 10 m (length of LHCb tracker) this means that the lifetime would be &lt;code class=&quot;highlighter-rouge&quot;&gt;~ 3.4e08&lt;/code&gt; or something in this order for lower values.&lt;/p&gt;
+
+&lt;p&gt;The code to use it is pretty simple. I have to change the mass and lifetime (be careful with units). I give Gravitino very high lifetime because I want it to be considered stable.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Configurables&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LHCb__ParticlePropertySvc&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;LHCb__ParticlePropertySvc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Particles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;&quot;~tau_1- 879  1000015  -1.0 %e %e unknown  1000015 0.00000000&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.34e-8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;&quot;~tau_1+ 880  -1000015  1.0 %e %e unknown  -1000015 0.00000000&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.34e-8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;s&quot;&gt;&quot;~Gravitino 892  1000039  0.0 %e %e unknown  1000039 0.00000000&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e08&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now when you run gauss you should get updates from ParticlePropertySvc in the logs. You will see something like&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LHCb::ParticlePropert...SUCCESS  New/updated particles (from &quot;Particles&quot; property)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Also it is useful to print the updated information. You should get something like that&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nt&quot;&gt;------------------------------------------------------------------------------------------------------------------------------------------------------------------&lt;/span&gt;
+ | &lt;span class=&quot;c&quot;&gt;#    |        Name       |     PdgID    |   Q  |        Mass       |    (c*)Tau/Gamma  |  MaxWidth  |        EvtGen        |  PythiaID  |     Antiparticle     |&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;------------------------------------------------------------------------------------------------------------------------------------------------------------------&lt;/span&gt;
+ | 792  | ~tau_1-           |      1000015 |  &lt;span class=&quot;nt&quot;&gt;-1&lt;/span&gt;  |           100 GeV |     10.013068 m   |      0     |        unknown       |   1000015  |        ~tau_1+       |
+ | 791  | ~tau_1+           |     &lt;span class=&quot;nt&quot;&gt;-1000015&lt;/span&gt; |   1  |           100 GeV |     10.013068 m   |      0     |        unknown       |  &lt;span class=&quot;nt&quot;&gt;-1000015&lt;/span&gt;  |        ~tau_1-       |
+ | 804  | ~Gravitino        |      1000039 |   0  |             0 eV  |        stable     |      0     |        unknown       |   1000039  |        self-cc       |
+ &lt;span class=&quot;nt&quot;&gt;------------------------------------------------------------------------------------------------------------------------------------------------------------------&lt;/span&gt;
+
+LHCb::ParticlePropert...   INFO  Mass     has beed redefined &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~Gravitino'&lt;/span&gt; , &lt;span class=&quot;s1&quot;&gt;'~tau_1+'&lt;/span&gt; , &lt;span class=&quot;s1&quot;&gt;'~tau_1-'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+LHCb::ParticlePropert...   INFO  Lifetime has beed redefined &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~Gravitino'&lt;/span&gt; , &lt;span class=&quot;s1&quot;&gt;'~tau_1+'&lt;/span&gt; , &lt;span class=&quot;s1&quot;&gt;'~tau_1-'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+      <pubDate>Mon, 21 Nov 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/How-to-modify-particles-in-LHCb-Gauss/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/How-to-modify-particles-in-LHCb-Gauss/</guid>
+      
+      
+    </item>
+    
+    <item>
+      <title>Write Hello World in OpenMP and C</title>
+      <description>&lt;hr /&gt;
+
+&lt;p&gt;Early this month i attened CoDaS hep summer school. It is meant for phycics graduate students to learn more about data analysis and machine learning in the field of high energy physics. During the school, we learned a lot of things about data analysis and machine learning. One of the topics we learned was how to use OpenMP to parallelize our code. In this post, I will show you how to write a simple Hello World program in OpenMP and C.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is OpenMP?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;OpenMP is a standard for parallel programming in C, C++, and Fortran. It provides a set of directives, functions, and data environment that allows programmers to write parallel code that can be executed on multiple CPU cores.&lt;/p&gt;
+
+&lt;p&gt;OpenMP allows programmers to specify which parts of the code should be executed in parallel and which parts should be executed sequentially. This enables them to write efficient parallel programs that can take advantage of the multiple CPU cores in a system.&lt;/p&gt;
+
+&lt;p&gt;OpenMP also provides a set of tools and libraries that can be used to manage the execution of parallel code, such as scheduling the threads and controlling their synchronization. These tools and libraries can be used to improve the performance of parallel programs and make them more efficient.&lt;/p&gt;
+
+&lt;p&gt;OpenMP is widely used in many fields, including scientific computing, data analysis, and technical computing. It is supported by many compilers and platforms, and it is compatible with a wide range of programming languages.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Why use C not C++?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Basically because it is what I have been introduced and C is a popular programming language that is widely used in many fields, including software development, scientific computing, and systems programming.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show you how to write a simple “Hello, World!” example in C and OpenMP. This example will demonstrate how to use the OpenMP library to parallelize a C program and execute it on multiple CPU cores.&lt;/p&gt;
+
+&lt;p&gt;To write a “Hello, World!” example in C and OpenMP, you first need to include the OpenMP header file in your program. This header file provides the declarations and definitions of the OpenMP functions and macros that you can use in your code.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;omp.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, you need to define the &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; function, which is the entry point of the program. In this function, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;#pragma omp&lt;/code&gt; parallel directive to specify that the code within the directive should be executed in parallel by multiple threads.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;#pragma omp parallel
+&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Code to be executed in parallel by multiple threads&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Within the &lt;code class=&quot;highlighter-rouge&quot;&gt;#pragma&lt;/code&gt; omp parallel directive, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;printf()&lt;/code&gt; function to print the &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;Hello, World!&quot;&lt;/code&gt; message. Now a more complete version of the “Hello, World!” example in C and OpenMP looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;omp.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nthreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;#pragma omp parallel private(nthreads, tid)
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;tid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;omp_get_thread_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;nthreads&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;omp_get_num_threads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello World Thread %d / %d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nthreads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This code is a simple “Hello, World!” example in C that uses the OpenMP library to parallelize the execution of the program. It includes the OpenMP header file &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;omp.h&amp;gt;&lt;/code&gt; and the standard input/output header file &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/code&gt; to access the OpenMP functions and the &lt;code class=&quot;highlighter-rouge&quot;&gt;printf()&lt;/code&gt; function, respectively.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; function, the &lt;code class=&quot;highlighter-rouge&quot;&gt;#pragma omp&lt;/code&gt; parallel directive as explained before is used to specify that the code within the directive should be executed in parallel by multiple threads. The &lt;code class=&quot;highlighter-rouge&quot;&gt;private()&lt;/code&gt; clause is used to specify that the nthreads and tid variables should be private to each thread and not shared among them.&lt;/p&gt;
+
+&lt;p&gt;Within the &lt;code class=&quot;highlighter-rouge&quot;&gt;#pragma omp&lt;/code&gt; parallel directive, the &lt;code class=&quot;highlighter-rouge&quot;&gt;omp_get_thread_num()&lt;/code&gt; function is used to get the thread ID of the current thread, and the &lt;code class=&quot;highlighter-rouge&quot;&gt;omp_get_num_threads()&lt;/code&gt; function is used to get the total number of threads. These values are then printed using the printf() function.&lt;/p&gt;
+
+&lt;p&gt;When this code is executed, the “Hello, World!” message will be printed multiple times, once for each thread that is executing the code within the &lt;code class=&quot;highlighter-rouge&quot;&gt;#pragma omp&lt;/code&gt; parallel directive. The thread ID and the total number of threads will be printed with each message, so you can see how the code is being executed in parallel by multiple threads.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;How to compile and run the code?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install GCC with OpenMP as default gcc in Mac is CLANG and doesn’t have OMP.&lt;/li&gt;
+  &lt;li&gt;Install gcc via home brew. &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install gcc&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Maybe in your shell you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;alias gcc=gcc-11&lt;/code&gt; to make it easy (and follow online tutorials make)&lt;/li&gt;
+  &lt;li&gt;To compile run &lt;code class=&quot;highlighter-rouge&quot;&gt;gcc -fopenmp omp.c -o omp&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run the example by &lt;code class=&quot;highlighter-rouge&quot;&gt;./omp&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+      <pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/openmp-hello-world/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/openmp-hello-world/</guid>
+      
+      
+    </item>
+    
+    <item>
+      <title>Histograms in ROOT </title>
+      <description>&lt;hr /&gt;
+
+&lt;p&gt;ROOT is a popular data analysis tool used in the field of high energy physics. It is a powerful tool that allows users to perform a variety of tasks, including generating histograms. In this article, we will show you how to generate histograms in ROOT.&lt;/p&gt;
+
+&lt;p&gt;To create a histogram in ROOT, you first need to have a data set that you want to plot. This data can be stored in a ROOT file or it can be generated directly in your ROOT session. Once you have your data, you can use the TH1 class to create a histogram. This class has several constructors that allow you to specify the number of bins, the range of the data, and other options.&lt;/p&gt;
+
+&lt;p&gt;For example, to create a histogram with 10 bins ranging from 0 to 100, you can use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;TH1F&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;h&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;My Histogram&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;TH1F&lt;/code&gt; class is used for histograms with floating point data, while the &lt;code class=&quot;highlighter-rouge&quot;&gt;TH1D&lt;/code&gt; class is used for histograms with double precision data. You can also use the &lt;code class=&quot;highlighter-rouge&quot;&gt;TH1I&lt;/code&gt; class for histograms with integer data.&lt;/p&gt;
+
+&lt;p&gt;Once you have created your histogram, you can fill it with data using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Fill()&lt;/code&gt; method. This method takes the value of the data point as an argument and increments the bin corresponding to that value. For example, to fill the histogram with random values between 0 and 100, you can use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gRandom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Uniform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The gRandom object is a global random number generator provided by ROOT. The &lt;code class=&quot;highlighter-rouge&quot;&gt;Uniform()&lt;/code&gt; method generates a random number between the two specified values (in this case, 0 and 100).
+Once you have filled your histogram with data, you can draw it on a canvas using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Draw()&lt;/code&gt; method. This method takes the name of the histogram and the drawing options as arguments. For example, to draw the histogram with a bar chart style and a blue color, you can use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Draw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BAR&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;color=blue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;BAR&lt;/code&gt; option specifies that the histogram should be drawn as a bar chart, while the &lt;code class=&quot;highlighter-rouge&quot;&gt;color=red&lt;/code&gt; option specifies that the bars should be red. There are many other drawing options available, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;LINE&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;SCAT&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;LEGO&lt;/code&gt;, which can be used to customize the appearance of the histogram.&lt;/p&gt;
+
+&lt;p&gt;To draw a histogram as a line chart, you can use the LINE option:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Draw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LINE&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In addition to changing the drawing style, you can also customize the colors of the histogram. The &lt;code class=&quot;highlighter-rouge&quot;&gt;Draw()&lt;/code&gt; method also takes a string argument that specifies the color. For example, to draw a histogram in red, you can use the following code:&lt;/p&gt;
+
+&lt;p&gt;h.Draw(“BAR”, “color=red”);&lt;/p&gt;
+
+&lt;p&gt;You can also add labels and titles to the histogram to make it more informative. To add a title to the histogram, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;SetTitle()&lt;/code&gt; method. This method takes the title as an argument. For example, to add the title “My Histogram” to the histogram, you can use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetTitle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;My Histogram&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To add labels to the x-axis and y-axis, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;GetXaxis()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;GetYaxis()&lt;/code&gt; methods, respectively. These methods return an TAxis object that can be used to customize the labels. For example, to add the labels “X-axis” and “Y-axis” to the x-axis and y-axis, respectively, you can use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetXaxis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetTitle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-axis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In addition to these options, the TH1 class provides many other methods and options that can be used to customize histograms. For more information, you can refer to the &lt;a href=&quot;https://root.cern.ch/doc/master/&quot;&gt;ROOT documentation&lt;/a&gt;.&lt;/p&gt;
+</description>
+      <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/histogram-in-ROOT/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/histogram-in-ROOT/</guid>
+      
+      
+    </item>
+    
+    <item>
+      <title>SUSY search at LHC</title>
+      <description>&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#lhc&quot;&gt;LHC&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#susy-search&quot;&gt;SUSY Search&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#squarks&quot;&gt;Squarks&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#gluinos&quot;&gt;gluinos&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Susy search in LHC (Large Hadron Collider) refers to the search for evidence of supersymmetry (SUSY) in particle collisions at the LHC. Supersymmetry is a proposed extension to the Standard Model of particle physics that predicts the existence of new particles called “superpartners” for each known particle. These particles would be related to the known particles by a symmetry called “supersymmetry,” which is a hypothetical symmetry between fermions (particles that make up matter) and bosons (particles that transmit forces).&lt;/p&gt;
+
+&lt;p&gt;The search for supersymmetry at the LHC is motivated by the fact that it could help explain some of the unsolved mysteries in particle physics, such as the nature of dark matter and the hierarchy problem. Dark matter is a type of matter that is thought to make up most of the matter in the universe, but it cannot be observed directly because it does not interact with light. The hierarchy problem refers to the fact that the Standard Model cannot explain the extremely large differences in mass between certain particles, such as the Higgs boson and the top quark.&lt;/p&gt;
+
+&lt;h2 id=&quot;lhc&quot;&gt;LHC&lt;/h2&gt;
+
+&lt;p&gt;The Large Hadron Collider (LHC) is the world’s most powerful particle accelerator. It is located at the CERN laboratory near Geneva, Switzerland, and it is used by physicists to study the fundamental nature of the universe.&lt;/p&gt;
+
+&lt;p&gt;The LHC consists of a 27-kilometer (17-mile) ring of superconducting magnets that are used to accelerate particles to nearly the speed of light. These particles are then collided at very high energies, creating conditions that are similar to those that existed in the universe shortly after the Big Bang. By studying the debris from these collisions, physicists can learn more about the fundamental particles and forces that make up the universe.&lt;/p&gt;
+
+&lt;p&gt;The LHC has made several important discoveries since it began operation in 2010. In 2012, it confirmed the existence of the Higgs boson, a particle that is responsible for giving other particles mass. This discovery was a major breakthrough in particle physics and confirmed a key prediction of the Standard Model, the current theory of particle physics.&lt;/p&gt;
+
+&lt;p&gt;In addition to the Higgs boson, the LHC has also been used to search for evidence of new particles and forces that are predicted by theories beyond the Standard Model, such as supersymmetry (SUSY) and dark matter. So far, these searches have not yet yielded any definitive results, but they continue to be an important part of the LHC’s research program.&lt;/p&gt;
+
+&lt;p&gt;The LHC is currently undergoing a major upgrade, known as the High-Luminosity LHC (HL-LHC), which will increase its collision energy and allow it to collect more data than ever before. This upgrade is expected to be completed in the mid-2020s and will help physicists continue their search for new physics at the frontiers of knowledge.&lt;/p&gt;
+
+&lt;p&gt;Overall, the LHC is an important tool for advancing our understanding of the fundamental nature of the universe. Its discoveries have already had a major impact on particle physics, and it continues to be at the forefront of scientific research.&lt;/p&gt;
+
+&lt;h2 id=&quot;susy-search&quot;&gt;SUSY Search&lt;/h2&gt;
+
+&lt;p&gt;The LHC is a powerful tool for searching for evidence of supersymmetry because it allows physicists to collide particles at very high energies, creating conditions that are similar to those that existed in the universe shortly after the Big Bang. By studying the debris from these collisions, physicists can look for signs of new particles that would be predicted by supersymmetry.&lt;/p&gt;
+
+&lt;p&gt;One way to search for evidence of supersymmetry at the LHC is to look for the production of “squarks” and “gluinos,” which are the superpartners of the quarks and gluons that make up protons and neutrons. These particles would be produced in pairs in high-energy collisions, and they would then decay into other particles, such as jets of quarks and leptons (particles that do not interact via the strong nuclear force). By looking for these decay products, physicists can search for evidence of squarks and gluinos.&lt;/p&gt;
+
+&lt;h3 id=&quot;squarks&quot;&gt;Squarks&lt;/h3&gt;
+
+&lt;p&gt;Squarks are hypothetical particles that are predicted by the theory of supersymmetry (SUSY) in particle physics. In the context of SUSY, squarks are the superpartners of quarks, which are the fundamental particles that make up protons and neutrons in the nucleus of an atom. Just as quarks have various “flavors” (up, down, charm, strange, top, and bottom), squarks also have corresponding flavors (sup, sdown, scharm, sstrange, stop, and sbottom).&lt;/p&gt;
+
+&lt;p&gt;The existence of squarks is predicted by SUSY because it is a symmetry between fermions (particles that make up matter) and bosons (particles that transmit forces). In SUSY, each known fermion has a corresponding boson superpartner, and each known boson has a corresponding fermion superpartner. Therefore, if quarks are fermions, then squarks must be their boson superpartners.&lt;/p&gt;
+
+&lt;p&gt;Squarks are interesting to physicists because they could potentially help explain some of the unsolved mysteries in particle physics, such as the nature of dark matter and the hierarchy problem. Dark matter is a type of matter that is thought to make up most of the matter in the universe, but it cannot be observed directly because it does not interact with light. The hierarchy problem refers to the fact that the Standard Model of particle physics cannot explain the extremely large differences in mass between certain particles, such as the Higgs boson and the top quark.&lt;/p&gt;
+
+&lt;p&gt;The search for squarks is one of the main goals of experiments at the Large Hadron Collider (LHC), which is the most powerful particle accelerator in the world. At the LHC, physicists collide particles at very high energies in order to create conditions that are similar to those that existed in the universe shortly after the Big Bang. By studying the debris from these collisions, physicists can look for evidence of new particles, such as squarks.&lt;/p&gt;
+
+&lt;p&gt;If squarks are discovered, it would be a major breakthrough in particle physics and could potentially lead to a deeper understanding of the fundamental nature of the universe. It could also help confirm the existence of SUSY and provide new insights into the nature of dark matter and the hierarchy problem. However, it is also possible that the LHC will not find evidence of squarks, in which case it would place strong constraints on the viability of SUSY as a theory.&lt;/p&gt;
+
+&lt;h3 id=&quot;gluinos&quot;&gt;gluinos&lt;/h3&gt;
+
+&lt;p&gt;Gluinos are also a hypothetical particles that are predicted by the theory of supersymmetry (SUSY) in particle physics. In the context of SUSY, gluinos are the superpartners of gluons, which are the particles that mediate the strong nuclear force that holds the nucleus of an atom together.&lt;/p&gt;
+
+&lt;p&gt;The existence of gluinos is predicted by SUSY because it is a symmetry between fermions (particles that make up matter) and bosons (particles that transmit forces). In SUSY, each known fermion has a corresponding boson superpartner, and each known boson has a corresponding fermion superpartner. Therefore, if gluons are bosons, then gluinos must be their fermion superpartners.&lt;/p&gt;
+
+&lt;p&gt;Gluinos are also interesting to physicists because they could potentially help explain some of the unsolved mysteries in particle physics, such as the nature of dark matter and the hierarchy problem. Dark matter is a type of matter that is thought to make up most of the matter in the universe, but it cannot be observed directly because it does not interact with light. The hierarchy problem refers to the fact that the Standard Model of particle physics cannot explain the extremely large differences in mass between certain particles, such as the Higgs boson and the top quark.&lt;/p&gt;
+
+&lt;p&gt;If gluinos are discovered, this also  would be a major breakthrough in particle physics and could potentially lead to a deeper understanding of the fundamental nature of the universe. It could also help confirm the existence of SUSY and provide new insights into the nature of dark matter and the hierarchy problem. However, it is also possible that the LHC will not find evidence of gluinos, in which case it would place strong constraints on the viability of SUSY as a theory.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Another way to search for supersymmetry at the LHC is to look for the production of “neutralinos” and “charginos,” which are the superpartners of the neutral and charged gauge bosons that mediate the weak nuclear force. These particles would be produced singly in high-energy collisions, and they would then decay into other particles, such as photons, leptons, and quarks. By looking for these decay products, physicists can search for evidence of neutralinos and charginos. One interesting feature of these particles is that they can be produced in pairs, and they can then annihilate into other particles, such as jets of quarks and leptons. By looking for these annihilation products, physicists can search for evidence of supersymmetry. Another Scenario could be the production of stau and gravitino as NLSP (Next Leading Super Particle) and LSP (Leading Super Particle ) respectively. This is an interesting scenario because the stau is a long lived particle and the gravitino is a very light particle. This should give us some unique but challengin signal. I’m currently working on investigating this scenario using LHCb long tracker as a potential detector for probing this scenario.&lt;/p&gt;
+
+&lt;p&gt;Overall, the search for supersymmetry at the LHC is an important and ongoing effort in particle physics. It holds the potential to provide new insights into the fundamental nature of the universe and could potentially lead to the discovery of new particles and forces.&lt;/p&gt;
+
+</description>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2022/SUSY-at-LHC/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2022/SUSY-at-LHC/</guid>
+      
+      
+    </item>
+    
+    <item>
+      <title>Monte Carlo Simulation of 2D Ising Model</title>
+      <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#the-ising-model&quot;&gt;The Ising Model&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#monte-carlo-simulation&quot;&gt;Monte-Carlo Simulation&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#physical-model&quot;&gt;Physical Model&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#python-implementation&quot;&gt;Python Implementation&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#python-code-for-ising-model&quot;&gt;Python code for Ising model&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#results&quot;&gt;Results&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#reproduction&quot;&gt;Reproduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#appendix-i&quot;&gt;Appendix I&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#appendix-ii&quot;&gt;Appendix II&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#results-1&quot;&gt;Results&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#python-311&quot;&gt;python 3.11&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#python-310&quot;&gt;python 3.10&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#python-39&quot;&gt;python 3.9&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#python-38&quot;&gt;python 3.8&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#other-versions&quot;&gt;Other versions&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;During my first year PhD at UC, I get the chance to take statistical mechanics class from a condensed matter physicist. It was a new experience when he focused too much on different side that I did not explore before. The final project in this class was about using Monte-Carlo method to simulate the Ising model. Ising model is a model of a system that undergoes a phase transition. There are many reasons why this model is interesting when it is not representing any actual physical systems.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It can be solved exactly, We can calculate the thermodynamical quantities and interpret them. In another can calculate the partition function and put it in an exact form.&lt;/li&gt;
+  &lt;li&gt;Ising model exhibits symmetry breaking in low-temperature phase.&lt;/li&gt;
+  &lt;li&gt;It is a simple model that can be used to understand the physics of phase transition.&lt;/li&gt;
+  &lt;li&gt;The Ising model is simple, yet it can be applied to many physical systems. This gives us a feature about universality, a feature that tells us that in such case the same theory applies to all sorts of different phase transitions.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;the-ising-model&quot;&gt;The Ising Model&lt;/h2&gt;
+&lt;p&gt;We can think of Ising model as a mathematical model where everything consists of small squares inside a bigger one. It is usually called lattices where we then have a big lattice of sites (small boxes) where each site can be in one of two states. Those states as we will see will refer to the spin state of the electron inside this site. Each site will be labeled by index ii. The Hamiltonian for the Ising model can be written as&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi mathvariant=&quot;script&quot;&gt;H&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;J&lt;/mi&gt;&lt;munder&gt;&lt;mo&gt;∑&lt;/mo&gt;&lt;mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;⟨&lt;/mo&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;⟩&lt;/mo&gt;&lt;/mrow&gt;&lt;/munder&gt;&lt;msub&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+\mathcal{H}=-J \sum_{\langle i j\rangle} S_i S_j
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.68333em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathcal&quot; style=&quot;margin-right:0.00965em;&quot;&gt;H&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:2.5660100000000003em;vertical-align:-1.516005em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.09618em;&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mop op-limits&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.050005em;&quot;&gt;&lt;span style=&quot;top:-1.808995em;margin-left:0em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mopen mtight&quot;&gt;⟨&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;mclose mtight&quot;&gt;⟩&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.0500049999999996em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;span class=&quot;mop op-symbol large-op&quot;&gt;∑&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.516005em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.05764em;&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.31166399999999994em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.05764em;&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.311664em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/posts/ising/ising.jpg&quot; alt=&quot;Lattice square representation of Ising model, https://stanford.edu/~jeffjar/statmech/intro4.html&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Spin &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;S_i&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.83333em;vertical-align:-0.15em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.05764em;&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.31166399999999994em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;  has value of +1 or -1.&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;  i j &lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.85396em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; implying that we are interested in nearest-neighbor interaction only.&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;J&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;J&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.68333em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.09618em;&quot;&gt;J&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;  is the interaction strength where ( J&amp;gt;0 ) assuming that strength is positive.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are many systems that can be represented using this model like “lattice gas” with each of the sites is the possible location of a particle;  means that site is empty and  means that site is occupied by a particle.&lt;/p&gt;
+
+&lt;p&gt;This system will undergo a 2nd order phase transition at some temperature &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;T=T_c&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.68333em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.13889em;&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.83333em;vertical-align:-0.15em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.13889em;&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.151392em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; which is called critical temperature. For cases when &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;T &amp;lt; T_c&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.72243em;vertical-align:-0.0391em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.13889em;&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.83333em;vertical-align:-0.15em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.13889em;&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.151392em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;, the system magnetizes, and the state is called the ferromagnetic state which is an ordered state. For cases when T &amp;gt; T_c ​,  the system is  disordered or in a paramagnetic state. We can define the order parameter for this system to be the average magnetization &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;m&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.43056em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;⟨&lt;/mo&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;⟩&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+m=\frac{\langle S\rangle}{N}
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.43056em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:2.113em;vertical-align:-0.686em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mopen nulldelimiter&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mfrac&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.427em;&quot;&gt;&lt;span style=&quot;top:-2.314em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.23em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;frac-line&quot; style=&quot;border-bottom-width:0.04em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.677em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mopen&quot;&gt;⟨&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.05764em;&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;⟩&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.686em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mclose nulldelimiter&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;This parameter is used to distinguish between the two phases that this system can have. It is zero when we are in disordered (paramagnetic) state and takes a non-zero value in ordered (ferromagnetic) state.&lt;/p&gt;
+
+&lt;h2 id=&quot;monte-carlo-simulation&quot;&gt;Monte-Carlo Simulation&lt;/h2&gt;
+
+&lt;p&gt;In this section, I’m going through the details of implementing the Monte-Carlo (MC) method for our Ising model. I apply the MC methods using Metropolis Algorithm to Ising model and extract physical parameters (Energy, Specific heat and Magnetization).&lt;/p&gt;
+
+&lt;h3 id=&quot;physical-model&quot;&gt;Physical Model&lt;/h3&gt;
+&lt;p&gt;Lattice is a periodical structure of points that align one by one. 2D lattice can be plotted as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * * * *   
+* * * * * * * * 
+* * * * * * * *
+* * * * * * * *
+* * * * * * * *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The points in lattice are called lattice points, nearest lattice points of point ^ are those lattice points denoted by (*) shown in the graph below:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * *(*)* * * *
+* *(*)^(*)* * *
+* * *(*)* * * *
+* * * * * * * *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Each lattice point is denoted by a number i in the Hamiltonian.&lt;/p&gt;
+
+&lt;p&gt;The expression for the Energy of the total system is&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;H&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;J&lt;/mi&gt;&lt;munderover&gt;&lt;mo&gt;∑&lt;/mo&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/munderover&gt;&lt;munderover&gt;&lt;mo&gt;∑&lt;/mo&gt;&lt;mrow&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/munderover&gt;&lt;mrow&gt;&lt;mo fence=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo fence=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+H=-J \sum_{i=0}^{N-1} \sum_{j=0}^{N-1}\left(s_{i, j} s_{i, j+1}+s_{i, j} s_{i+1, j}\right)
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.68333em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.08125em;&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:3.2421130000000007em;vertical-align:-1.4137769999999998em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.09618em;&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mop op-limits&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.8283360000000004em;&quot;&gt;&lt;span style=&quot;top:-1.872331em;margin-left:0em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mrel mtight&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.050005em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;span class=&quot;mop op-symbol large-op&quot;&gt;∑&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-4.300005em;margin-left:0em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;mbin mtight&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.277669em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mop op-limits&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.8283360000000006em;&quot;&gt;&lt;span style=&quot;top:-1.872331em;margin-left:0em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;mrel mtight&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.050005em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;span class=&quot;mop op-symbol large-op&quot;&gt;∑&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-4.3000050000000005em;margin-left:0em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3.05em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;mbin mtight&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.4137769999999998em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;minner&quot;&gt;&lt;span class=&quot;mopen delimcenter&quot; style=&quot;top:0em;&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.311664em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.311664em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;mbin mtight&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.311664em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.311664em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mbin mtight&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.05724em;&quot;&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mclose delimcenter&quot; style=&quot;top:0em;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * * * * 
+* * * * * * * *
+* * * * * * * * &amp;lt;-the i-th lattice point
+* * * * * * * *
+* * * * * * * *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Periodical structure means that lattice point at(1,1) is the same as that at(1,9) if the lattice is 5 x 8. For example (1,1)&amp;lt;=&amp;gt;(6,1), (2,3)&amp;lt;=&amp;gt;(2,11). A 2D lattice can be any  &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_x&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.83333em;vertical-align:-0.15em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.151392em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot;&gt;x&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; by &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_y&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.969438em;vertical-align:-0.286108em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15139200000000003em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathdefault mtight&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.286108em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;. The location &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;(x,y)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;mpunct&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathdefault&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; here is another denotion of lattice point that is fundamentally same as i-th lattice point denotation above.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * * * * 4
+* * * * * * * * 3
+* * * * * * * * 2
+* * * * * * * * 1
+1 2 3 4 5 6 7 8 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;python-implementation&quot;&gt;Python Implementation&lt;/h3&gt;
+
+&lt;p&gt;Algorithm&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. Prepare some initial configurations of N spins.
+2. Flip spin of a lattice site chosen randomly
+3. Calculate the change in energy due to that
+4. If this change is negative, accept such move. If change is positive, accept it with probability exp^{-dE/kT}
+5. Repeat 2-4.
+6. Calculate Other parameters and plot them
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python-code-for-ising-model&quot;&gt;Python code for Ising model&lt;/h4&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+&lt;span class=&quot;c1&quot;&gt;##  Import needed python libraries 
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numba&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# for faster computation
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# for array and matrix operations
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# for random number generation
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# for timing the code 
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tqdm&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tqdm&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# for progress bar
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#from tqdm.notebook import tqdm # for progress bar in jupyter notebook
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Firrst, we need to define the parameters of the system. We will use the following parameters:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Define parameters 
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Magnetic field strength
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Lattice size (width)
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Begin with random spin sites with values (+1 or -1) for up or down spins. 
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# number of MC sweeps 
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Initlaize temperature range, takes form np.arange(start,stop,step)
+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And after that we need to define the main function to calculate the energy of the system. We will use the following function:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Define functions to compute energy and magnetization
+&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
+Energy of the lattice calculations. 
+
+The energy here is simply the sum of interactions between spins divided by the total number of spins
+'''&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nopython&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# wonderful jit optimization compiler in its high performance mode
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calcE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+    
+ &lt;span class=&quot;s&quot;&gt;'''
+Calculate the Magnetization of a given configuration
+
+Magnetization is the sum of all spins divided by the total number of spins
+
+'''&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nopython&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calcM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The next step is to define the function to calculate the change in energy due to a spin flip. We will use the following function:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Calculate interaction energy between spins. Assume periodic boundaries.
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Interaction energy will be the difference in energy due to flipping spin i,j 
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# (Example: 2*spin_value*neighboring_spins)
+&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nopython&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# change in energy function
+&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#top
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# periodic boundary (top)
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;#bottom
+&lt;/span&gt;    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# periodic boundary (bottom)
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;#left
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# periodic boundary (left)
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;#right
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# periodic boundary  (right)
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# difference in energy is i,j is flipped
+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we implement the Metropolis Algorithm to flip the spin of a lattice site chosen randomly. We will use the following function:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;c1&quot;&gt;# Monte-carlo sweep implementation
+&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nopython&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;   
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# choose random row
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# choose random column
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ediff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ediff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# if the change in energy is negative
+&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# accept move and flip spin
+&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ediff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# if not accept it with probability exp^{-dU/kT}
+&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And finally we implement the main function to calculate the energy and magnetization of the system. We will use the following function:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Compute physical quantities
+&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nopython&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;physics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;En&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;En_sq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;Mg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;Mg_sq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calcE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calcM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;En&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;Mg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;En_sq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;Mg_sq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;En_avg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;En&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;mag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;CV&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;En_sq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;En&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;En_avg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And we initialize the arrays to store the values of the energy, magnetization and specific heat capacity. And we use &lt;code class=&quot;highlighter-rouge&quot;&gt;time()&lt;/code&gt; function to calculate the time taken by the code to run. We will use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Inititalize magnetization, average energy and heat capacity
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;En_avg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;CV&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we are ready to write for loop to sweep over the temperature range and calculate the energy, magnetization and specific heat capacity. We will use the following code:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Simulate at particular temperatures (T) and compute physical quantities
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;track&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Sweeps spins
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Compute physical quanitites with 1000 sweeps per spin at temperature T
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;En_avg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;physics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Time it took in seconds is = %s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'It took '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;' minutes to execute the code'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now let’s plot the results. We will use the following code that plots the energy, magnetization and specific heat capacity as a function of temperature:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# plot the calculated values
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;En_avg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'IndianRed'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Temperature (T)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Energy &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'tight'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'RoyalBlue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Temperature (T)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Magnetization &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'tight'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'IndianRed'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Temperature (T)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Specific Heat &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'tight'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots_adjust&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.81&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.26&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;suptitle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Simulation of 2D Ising Model by Metropolis Algorithm&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Lattice Dimension:&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;X&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;External Magnetic Field(B)=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Metropolis Step=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# function to show the plots
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;These are plots of the physical quantities for different MC steps.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/posts/ising/plot_1.png&quot; alt=&quot;Simulation results for 50*50 lattice with 500000 steps&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reproduction&quot;&gt;Reproduction&lt;/h2&gt;
+
+&lt;p&gt;You can run the Jupyter Notebook provided on Colab directly, or you can download from my project &lt;a href=&quot;https://github.com/MohamedElashri/IsingModel&quot;&gt;GitHub repository&lt;/a&gt; and run locally. Also, there is python script that you can run. I’m using Numba cache so that it produces cache folder (specific to machine CPU and configuration) so that you will need to produce yours by running it for one time and subsequent runs will be about twice faster.&lt;/p&gt;
+
+&lt;p&gt;To run the script&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;clone the repository
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/MohamedElashri/IsingModel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;run the script
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python IsingModel/IsingModel.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;appendix-i&quot;&gt;Appendix I&lt;/h2&gt;
+
+&lt;p&gt;I spent many nights working on this work, most of time I needed to optimize my code, I even tried to move to Matlab (last time I used it was like 5 years ago). But I learned a nice thing from my desire to optimize code speed. It is the usage of Numba’s JIT compiler. Read more about that &lt;a href=&quot;https://web.archive.org/web/20210802225233/http://melashri.net/url/b&quot;&gt;here&lt;/a&gt;. I also instead of using multiple nested loops I dragged all these into just one. Imagine running 50x50 lattice simulation in my older codes for hours (one took 6 hours) vs 15 minutes for the current script. (On my Mac m1 Machine). Also, I made the code available on colab and can be accessed &lt;a href=&quot;https://web.archive.org/web/20210802225233/http://melashri.net/url/c&quot;&gt;here&lt;/a&gt; (without many comments).&lt;/p&gt;
+
+&lt;h2 id=&quot;appendix-ii&quot;&gt;Appendix II&lt;/h2&gt;
+&lt;p&gt;I have used this codebase as a benchmark test for python releases. I plan on maintain this test (available as &lt;a href=&quot;https://github.com/MohamedElashri/python_bench_ising&quot;&gt;repo&lt;/a&gt; on github). Initialy I used numpy-1.23.4 for all different version of python used in the benchmark. This is the latest version of numpy. I got the following results.&lt;/p&gt;
+
+&lt;h3 id=&quot;results-1&quot;&gt;Results&lt;/h3&gt;
+
+&lt;p&gt;The benchmarks are executed on Macbook pro Apple Silicon M1 version. The python version are installed using &lt;code class=&quot;highlighter-rouge&quot;&gt;homebrew&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The arguments of the script are L(length of the lattice),  n(number of Monte Carlo cycles).&lt;/p&gt;
+&lt;h4 id=&quot;python-311&quot;&gt;python 3.11&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;python3.11 ising.py 10 10000
+Time it took &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;seconds is &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 109.2954261302948
+python3.11 ising.py 10 10000  110.82s user 0.79s system 100% cpu 1:51.38 total
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python-310&quot;&gt;python 3.10&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;python3.10 ising.py 10 10000
+Time it took &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;seconds is &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 123.83638191223145
+python3.10 ising.py 10 10000  124.80s user 0.69s system 101% cpu 2:04.06 total
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python-39&quot;&gt;python 3.9&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;python3.9 ising.py 10 10000
+Time it took &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;seconds is &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 123.56476402282715
+python3.9 ising.py 10 10000  123.94s user 1.08s system 101% cpu 2:03.67 total
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python-38&quot;&gt;python 3.8&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;python3.8 ising.py 10 10000
+Time it took &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;seconds is &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 135.1741383075714
+python3.8 ising.py 10 10000  137.05s user 1.00s system 100% cpu 2:17.24 total
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;other-versions&quot;&gt;Other versions&lt;/h4&gt;
+
+&lt;p&gt;Python started supporting apple silicon starting from &lt;code class=&quot;highlighter-rouge&quot;&gt;python3.8&lt;/code&gt; and I try to make things as consistent as possible. Not to mention that &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy&lt;/code&gt; optimization for different version might be unaccounted difference.&lt;/p&gt;
+</description>
+      <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
+      <link>https://blog.melashri.net/2021/Monte-Carlo-Simulation-of-Ising-Model/</link>
+      <guid isPermaLink="true">https://blog.melashri.net/2021/Monte-Carlo-Simulation-of-Ising-Model/</guid>
+      
+      
+    </item>
+    
+  </channel>
+</rss>
